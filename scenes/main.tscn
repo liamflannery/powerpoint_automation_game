@@ -1,15 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=5 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da0dk4s05yj4u" path="res://scenes/elements/arrow.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="3_sugp2"]
 
-[node name="main" type="Control"]
+[node name="main" type="Control" node_paths=PackedStringArray("tile_grid")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jyhfs")
+tile_grid = NodePath("VBoxContainer/HBoxContainer/ColorRect2/GridContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -19,15 +23,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -577.0
-offset_top = -312.0
+offset_top = -324.0
 offset_right = 577.0
-offset_bottom = 312.0
+offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
+color = Color(0.231373, 0.290196, 0.333333, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ColorRect"]
 layout_mode = 1
@@ -62,164 +67,186 @@ text = "Colourer"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+color = Color(0.133333, 0.2, 0.227451, 1)
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
+color = Color(0, 0.121569, 0.14902, 1)
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -475.0
+offset_top = -237.5
+offset_right = 475.0
+offset_bottom = 237.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 10
 
-[node name="tile" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 starting_element = ExtResource("2_0xm2m")
 
-[node name="tile2" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile2" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile3" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile3" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile4" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile4" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+starting_element = ExtResource("3_sugp2")
+
+[node name="tile5" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile5" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile6" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile6" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile7" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile7" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile8" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile8" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile9" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile9" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile10" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile10" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile11" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile11" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile12" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile12" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile13" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile13" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile14" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+starting_element = ExtResource("2_0xm2m")
+
+[node name="tile15" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+starting_element = ExtResource("3_sugp2")
+
+[node name="tile16" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile14" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile17" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile15" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile18" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile16" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile19" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile17" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile18" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile19" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile22" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile20" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile21" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+starting_element = ExtResource("2_0xm2m")
+
+[node name="tile25" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile22" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile26" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile23" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile27" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile24" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile28" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile25" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile29" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile26" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile30" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile27" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile31" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile28" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile32" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile29" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile33" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile30" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile34" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile31" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile35" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile32" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile36" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile33" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile37" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile34" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile38" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile35" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile39" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile36" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile40" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile37" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile41" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile38" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile42" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile39" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile43" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile40" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile44" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile41" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile45" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile42" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile46" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile43" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile47" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile44" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile48" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile45" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile49" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile46" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
-layout_mode = 2
-
-[node name="tile47" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
-layout_mode = 2
-
-[node name="tile48" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
-layout_mode = 2
-
-[node name="tile49" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
-layout_mode = 2
-
-[node name="tile50" parent="VBoxContainer/HBoxContainer/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile50" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

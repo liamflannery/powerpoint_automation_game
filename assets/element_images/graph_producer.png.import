@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf0km5q3q03wi"
-path="res://.godot/imported/automation_inkscape.svg-682bc85466b85382402ed073d6bc0815.ctex"
+uid="uid://datm07ry3qsbb"
+path="res://.godot/imported/graph_producer.png-5b006cd0d701aebe058eb869dfe9855c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/automation_inkscape.svg"
-dest_files=["res://.godot/imported/automation_inkscape.svg-682bc85466b85382402ed073d6bc0815.ctex"]
+source_file="res://assets/element_images/graph_producer.png"
+dest_files=["res://.godot/imported/graph_producer.png-5b006cd0d701aebe058eb869dfe9855c.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

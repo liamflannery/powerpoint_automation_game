@@ -3,5 +3,8 @@
 [ext_resource type="Script" uid="uid://bbyfkpv0vasdq" path="res://scenes/tile.gd" id="1_n3f48"]
 
 [node name="tile" type="ColorRect"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(95, 95)
+color = Color(0.996078, 1, 0.690196, 1)
 script = ExtResource("1_n3f48")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

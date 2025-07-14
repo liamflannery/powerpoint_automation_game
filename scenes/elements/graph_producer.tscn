@@ -1,14 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://bo3xftlp833rm"]
+[gd_scene load_steps=4 format=3 uid="uid://bo3xftlp833rm"]
 
-[ext_resource type="Texture2D" uid="uid://ivkfe8q8n2t2" path="res://assets/arrow_up_down.png" id="1_85rgo"]
 [ext_resource type="Script" uid="uid://dqyui5cet7mee" path="res://scenes/elements/graph_producer.gd" id="2_iludv"]
+[ext_resource type="Texture2D" uid="uid://datm07ry3qsbb" path="res://assets/element_images/graph_producer.png" id="3_85rgo"]
+[ext_resource type="PackedScene" uid="uid://jitx6piepqug" path="res://scenes/game resources/graph.tscn" id="3_h4iiy"]
 
-[node name="graph_producer" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
+[node name="graph" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
 custom_minimum_size = Vector2(80, 80)
-offset_right = 80.0
-offset_bottom = 80.0
-texture = ExtResource("1_85rgo")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_85rgo")
+expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_iludv")
+producing_resource = ExtResource("3_h4iiy")
 texture_rect = NodePath(".")
-facing_direction = 1
+sending_directions = Array[int]([0, 1, 2, 3])
+recieving_directions = Array[int]([0, 1, 2, 3])
+north_facing_texture = ExtResource("3_85rgo")
+east_facing_texture = ExtResource("3_85rgo")
+south_facing_texture = ExtResource("3_85rgo")
+west_facing_texture = ExtResource("3_85rgo")
