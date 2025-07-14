@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo3xftlp833rm"]
+
+[ext_resource type="Texture2D" uid="uid://ivkfe8q8n2t2" path="res://assets/arrow_up_down.png" id="1_85rgo"]
+[ext_resource type="Script" uid="uid://dqyui5cet7mee" path="res://scenes/elements/graph_producer.gd" id="2_iludv"]
+
+[node name="graph_producer" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+texture = ExtResource("1_85rgo")
+stretch_mode = 5
+script = ExtResource("2_iludv")
+texture_rect = NodePath(".")
+facing_direction = 1
