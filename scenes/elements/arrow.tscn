@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://da0dk4s05yj4u"]
+[gd_scene load_steps=8 format=3 uid="uid://da0dk4s05yj4u"]
 
 [ext_resource type="Script" uid="uid://bv02x72lw86tp" path="res://scenes/elements/arrow.gd" id="1_pmcjm"]
 [ext_resource type="Texture2D" uid="uid://ivkfe8q8n2t2" path="res://assets/arrow_up_down.png" id="1_vnigt"]
 [ext_resource type="Texture2D" uid="uid://bvkatmubb5x0l" path="res://assets/arrow_left_right.png" id="3_acd0x"]
+[ext_resource type="Texture2D" uid="uid://4dnyyjepfmxy" path="res://assets/arrow_bend.png" id="3_tk65o"]
+[ext_resource type="Texture2D" uid="uid://bsmepqxada811" path="res://assets/arrow_bend_right_up.png" id="5_r1o5m"]
+[ext_resource type="Texture2D" uid="uid://d0lfmmjslnx11" path="res://assets/arrow_bend_left_down.png" id="6_fyl8h"]
+[ext_resource type="Texture2D" uid="uid://c7clgtwiwt36u" path="res://assets/arrow_bend_right_down.png" id="7_5k1id"]
 
 [node name="arrow" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
 custom_minimum_size = Vector2(95, 95)
@@ -12,10 +16,66 @@ texture = ExtResource("1_vnigt")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_pmcjm")
+up_down_texture = ExtResource("1_vnigt")
+left_right_texture = ExtResource("3_acd0x")
+corner_texture_left_up = ExtResource("3_tk65o")
+corner_texture_right_up = ExtResource("5_r1o5m")
+corner_texture_left_down = ExtResource("6_fyl8h")
+corner_texture_right_down = ExtResource("7_5k1id")
 texture_rect = NodePath(".")
 sending_directions = Array[int]([2])
-recieving_directions = Array[int]([3])
+recieving_directions = Array[int]([0])
 north_facing_texture = ExtResource("1_vnigt")
 east_facing_texture = ExtResource("3_acd0x")
 south_facing_texture = ExtResource("1_vnigt")
 west_facing_texture = ExtResource("3_acd0x")
+
+[node name="north_rect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -11.0
+offset_right = 11.0
+offset_bottom = 22.0
+grow_horizontal = 2
+
+[node name="east_rect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="south_rect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = -22.0
+offset_right = 11.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="west_rect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_vertical = 2

@@ -1,6 +1,6 @@
 extends Control
 class_name Element
-
+signal placed
 @export var max_resources_stored : int = 1
 var resources : Array[GameResource]
 
@@ -26,14 +26,25 @@ enum DIRECTION{
 var parent_tile : Tile
 var adjacent_tiles : Array[Tile]
 
-func _ready() -> void:
-	set_direction(sending_directions)
+func change_direction():
+	pass
 
-func set_direction(value : Array[DIRECTION]):
-	sending_directions = value
-	if sending_directions.is_empty():
+func predict_direction(on_tile : Tile):
+	pass
+
+func reset_tile(tile : Tile):
+	pass
+
+func reset_direction():
+	if !previous_directions.is_empty():
+		set_direction(previous_directions[0], previous_directions[1])
+
+func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions, in_recieving_directions : Array[DIRECTION] = recieving_directions):
+	recieving_directions = in_recieving_directions
+	sending_directions = in_sending_directions
+	if in_sending_directions.is_empty():
 		return
-	match sending_directions[0]:
+	match in_sending_directions[0]:
 		DIRECTION.NORTH: 
 			texture_rect.texture = north_facing_texture
 		DIRECTION.EAST:
@@ -46,6 +57,52 @@ func set_direction(value : Array[DIRECTION]):
 func element_placed(on_tile : Tile):
 	parent_tile = on_tile
 	adjacent_tiles = Stage.get_main().get_adjacent_tiles(parent_tile)
+	placement_mode = false
+	placed.emit()
+
+var closest_tile : Tile
+func _input(event: InputEvent) -> void:
+	# Check if we're in placement mode (you'll need to define this condition based on your game state)
+	if is_in_placement_mode():
+		# Snap to closest tile to mouse position
+		if closest_tile != get_closest_tile_to_mouse():
+			reset_tile(closest_tile)
+			closest_tile = get_closest_tile_to_mouse()
+			if closest_tile:
+				global_position = closest_tile.global_position + closest_tile.size/2 - size/2
+				predict_direction(closest_tile)
+		if event is InputEventMouseButton:
+			var mouse_event = event as InputEventMouseButton
+			
+			# Left click - place element on tile
+			if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+				if closest_tile:
+					place_on_tile(closest_tile)
+			
+			# Right click - change direction
+			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
+				if is_mouse_over_element():
+					change_direction()
+var placement_mode = true
+func is_in_placement_mode() -> bool:
+	return placement_mode
+
+func get_closest_tile_to_mouse() -> Tile:
+	return Stage.get_main().get_closest_tile_to_position(get_global_mouse_position())
+
+
+func place_on_tile(tile: Tile) -> void:
+	# Place the element on the specified tile
+	if tile and !tile.element:
+		tile.element = self
+		element_placed(tile)
+		
+
+func is_mouse_over_element() -> bool:
+	var mouse_pos = get_global_mouse_position()
+	var rect = Rect2(global_position, size)
+	return rect.has_point(mouse_pos)
+
 
 func activate_element():
 	var send_to : Array[Tile]
@@ -65,6 +122,8 @@ func activate_element():
 					send_to.append(adjacent_tiles[3])
 	for tile in send_to:
 		if tile and tile.element and tile.element.can_recieve_resource(self) and !resources.is_empty():
+			#if tile.element is not Arrow and self is not Arrow:
+				#continue
 			tile.element.send_resource(resources.pop_back())
 
 
@@ -73,7 +132,7 @@ func send_resource(sent_resource : GameResource):
 	sent_resource.reparent(self)
 	resources.append(sent_resource)
 	movement_tween = create_tween()
-	movement_tween.tween_property(sent_resource, "global_position", global_position + size/2, 0.3)
+	movement_tween.tween_property(sent_resource, "global_position", global_position + size/2 - sent_resource.size/2, 0.3)
 
 func can_recieve_resource(sending_element : Element) -> bool:
 	var direction_correct = false
@@ -81,6 +140,11 @@ func can_recieve_resource(sending_element : Element) -> bool:
 		if sending_element.sending_directions.map(func(dir): return get_opposite_direction(dir)).has(direction):
 			direction_correct = true
 	return resources.size() < max_resources_stored and direction_correct
+
+
+var previous_directions : Array[Array]
+func save_direction_state():
+	previous_directions = [sending_directions, recieving_directions]
 
 
 func get_opposite_direction(from_direction : DIRECTION) -> DIRECTION:
@@ -95,3 +159,17 @@ func get_opposite_direction(from_direction : DIRECTION) -> DIRECTION:
 			return DIRECTION.EAST
 		_:
 			return 0
+
+func get_clockwise_direction(from_direction : DIRECTION) -> DIRECTION:
+	match from_direction:
+		DIRECTION.NORTH:
+			return DIRECTION.EAST
+		DIRECTION.EAST:
+			return DIRECTION.SOUTH
+		DIRECTION.SOUTH:
+			return DIRECTION.WEST
+		DIRECTION.WEST:
+			return DIRECTION.NORTH
+		_:
+			return 0
+			

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=7 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da0dk4s05yj4u" path="res://scenes/elements/arrow.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://c2p5oqy7wp8yd" path="res://scenes/create_element_button.gd" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://d15xhe2njxijv" path="res://scenes/elements/colourer.tscn" id="4_tefeu"]
 
 [node name="main" type="Control" node_paths=PackedStringArray("tile_grid")]
 layout_mode = 3
@@ -50,20 +52,25 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
+[node name="Arrow" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Arrow"
+script = ExtResource("2_tbgi4")
+element_scene = ExtResource("2_0xm2m")
 
 [node name="LineGraphMaker" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Line Graph Maker"
+script = ExtResource("2_tbgi4")
 
 [node name="Colourer" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Colourer"
+script = ExtResource("2_tbgi4")
+element_scene = ExtResource("4_tefeu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -98,7 +105,6 @@ columns = 10
 
 [node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-starting_element = ExtResource("2_0xm2m")
 
 [node name="tile2" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
@@ -139,11 +145,9 @@ layout_mode = 2
 
 [node name="tile14" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-starting_element = ExtResource("2_0xm2m")
 
 [node name="tile15" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-starting_element = ExtResource("3_sugp2")
 
 [node name="tile16" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
@@ -171,7 +175,6 @@ layout_mode = 2
 
 [node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-starting_element = ExtResource("2_0xm2m")
 
 [node name="tile25" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

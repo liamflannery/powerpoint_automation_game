@@ -33,3 +33,13 @@ func get_adjacent_tiles(to_tile : Tile) -> Array[Tile]:
 		adjacent_tiles[3] = tiles[target_tile_index - 1]
 	
 	return adjacent_tiles
+
+
+
+
+func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=false):
+	var sorted_tiles = tiles.duplicate()
+	if !include_full_tiles:
+		sorted_tiles = sorted_tiles.filter(func(tile): return !tile.element)
+	sorted_tiles.sort_custom(func(a,b): return to_position.distance_to(a.global_position + a.size/2) < to_position.distance_to(b.global_position + b.size/2))
+	return sorted_tiles.front()
