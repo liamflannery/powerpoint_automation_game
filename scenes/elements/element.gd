@@ -2,8 +2,8 @@ extends Control
 class_name Element
 signal placed
 @export var max_resources_stored : int = 1
-var resources : Array[GameResource]
-
+var queued_resources : Array[GameResource]
+var processed_resources : Array[GameResource]
 enum DIRECTION{
 	NORTH,
 	EAST,
@@ -60,6 +60,7 @@ func element_placed(on_tile : Tile):
 	placement_mode = false
 	placed.emit()
 
+
 var closest_tile : Tile
 func _input(event: InputEvent) -> void:
 	# Check if we're in placement mode (you'll need to define this condition based on your game state)
@@ -103,43 +104,73 @@ func is_mouse_over_element() -> bool:
 	var rect = Rect2(global_position, size)
 	return rect.has_point(mouse_pos)
 
-
+var element_activating = false
 func activate_element():
-	var send_to : Array[Tile]
-	for facing_direction in sending_directions:
-		match facing_direction:
-			DIRECTION.NORTH:
-				if adjacent_tiles[0] and adjacent_tiles[0].element:
-					send_to.append(adjacent_tiles[0])
-			DIRECTION.EAST:
-				if adjacent_tiles[1] and adjacent_tiles[1].element:
-					send_to.append(adjacent_tiles[1])
-			DIRECTION.SOUTH:
-				if adjacent_tiles[2] and adjacent_tiles[2].element:
-					send_to.append(adjacent_tiles[2])
-			DIRECTION.WEST:
-				if adjacent_tiles[3] and adjacent_tiles[3].element:
-					send_to.append(adjacent_tiles[3])
-	for tile in send_to:
-		if tile and tile.element and tile.element.can_recieve_resource(self) and !resources.is_empty():
-			#if tile.element is not Arrow and self is not Arrow:
-				#continue
-			tile.element.send_resource(resources.pop_back())
+	element_activating = true
+	if !queued_resources.is_empty():
+		processed_resources.append(queued_resources.pop_back())
+	element_activating = false
+	
+func _process(delta: float) -> void:
 
+	
+	if !processed_resources.is_empty():
+		var send_to : Array[Tile]
+		for facing_direction in sending_directions:
+			match facing_direction:
+				DIRECTION.NORTH:
+					if adjacent_tiles[0] and adjacent_tiles[0].element and DIRECTION.SOUTH in adjacent_tiles[0].element.recieving_directions:
+						send_to.append(adjacent_tiles[0])
+				DIRECTION.EAST:
+					if adjacent_tiles[1] and adjacent_tiles[1].element and DIRECTION.WEST in adjacent_tiles[1].element.recieving_directions:
+						send_to.append(adjacent_tiles[1])
+				DIRECTION.SOUTH:
+					if adjacent_tiles[2] and adjacent_tiles[2].element and DIRECTION.NORTH in adjacent_tiles[2].element.recieving_directions:
+						send_to.append(adjacent_tiles[2])
+				DIRECTION.WEST:
+					if adjacent_tiles[3] and adjacent_tiles[3].element and DIRECTION.EAST in adjacent_tiles[3].element.recieving_directions:
+						send_to.append(adjacent_tiles[3])
+		
+		for tile in send_to:
+			if tile and tile.element and tile.element.can_recieve_resource(self, processed_resources.back()) and !processed_resources.is_empty():
+				#if tile.element is not Arrow and self is not Arrow:
+					#continue
+				if tile.element.resource_sending:
+					continue
+				if !movement_tween or !movement_tween.is_running():
+					var sending_resource = processed_resources.back()
+					processed_resources.erase(sending_resource)
+					await tile.element.send_resource(sending_resource)
+	
+	if _ready_to_activate():
+		await activate_element()
 
-func send_resource(sent_resource : GameResource):
-	var movement_tween : Tween
+func _ready_to_activate() -> bool:
+	return !queued_resources.is_empty() and !element_activating
+		
+
+var movement_tween : Tween
+var resource_sending : bool = false
+func send_resource(sent_resource : GameResource, reactivate=true):
+	resource_sending = true
+	if movement_tween and movement_tween.is_running():
+		movement_tween.kill()
 	sent_resource.reparent(self)
-	resources.append(sent_resource)
 	movement_tween = create_tween()
 	movement_tween.tween_property(sent_resource, "global_position", global_position + size/2 - sent_resource.size/2, 0.3)
+	queued_resources.append(sent_resource)
+	await movement_tween.finished
+	resource_sending = false
 
-func can_recieve_resource(sending_element : Element) -> bool:
+func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:
+	if sending_element is not Arrow and self is not Arrow:
+		return false
+	
 	var direction_correct = false
 	for direction in recieving_directions:
 		if sending_element.sending_directions.map(func(dir): return get_opposite_direction(dir)).has(direction):
 			direction_correct = true
-	return resources.size() < max_resources_stored and direction_correct
+	return queued_resources.size() < max_resources_stored and processed_resources.size() < max_resources_stored and direction_correct
 
 
 var previous_directions : Array[Array]

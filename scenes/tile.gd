@@ -17,10 +17,10 @@ func set_element(element_packed_scene : PackedScene):
 	element.element_placed(self)
 
 
-var timer : float
-func _process(delta: float) -> void:
-	timer += delta + randf() * 0.01
-	if timer >= 1:
-		timer = 0
-		if element:
-			element.activate_element()
+#var timer : float
+#func _process(delta: float) -> void:
+	#timer += delta + randf() * 0.001
+	#if timer >= 1:
+		#timer = 0
+		#if element:
+			#element.activate_element()

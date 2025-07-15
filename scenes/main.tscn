@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=8 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c2p5oqy7wp8yd" path="res://scenes/create_element_button.gd" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://d15xhe2njxijv" path="res://scenes/elements/colourer.tscn" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://ds5uf2qsne31v" path="res://scenes/elements/target.tscn" id="7_o6xl0"]
 
 [node name="main" type="Control" node_paths=PackedStringArray("tile_grid")]
 layout_mode = 3
@@ -181,6 +182,7 @@ layout_mode = 2
 
 [node name="tile26" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+starting_element = ExtResource("7_o6xl0")
 
 [node name="tile27" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

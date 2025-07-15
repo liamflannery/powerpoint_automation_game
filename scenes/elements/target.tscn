@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds5uf2qsne31v"]
+
+[ext_resource type="Texture2D" uid="uid://coa87tsugofly" path="res://assets/target.png" id="1_trwdl"]
+[ext_resource type="Script" uid="uid://bycy7jllq3rrv" path="res://scenes/elements/target.gd" id="2_trwdl"]
+
+[node name="target" type="TextureRect" node_paths=PackedStringArray("resource_counter")]
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_trwdl")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_trwdl")
+resource_counter = NodePath("counter")
+max_resources_stored = 7
+recieving_directions = Array[int]([0, 1, 2, 3])
+
+[node name="counter" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 1

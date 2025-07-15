@@ -94,11 +94,11 @@ func predict_direction(on_tile : Tile, initial = true, direction_preference : DI
 		var tiles_feeding_into_this_tile : Array[Tile]
 		var tiles_recieving_from_this_tile : Array[Tile]
 		for i in adjacent_prediction.size():
-				if adjacent_prediction[i] and adjacent_prediction[i].element and adjacent_prediction[i].element is Arrow:
+				if adjacent_prediction[i] and adjacent_prediction[i].element:
 					if adjacent_prediction[i].element.sending_directions.front() == get_opposite_direction(i):
 						tiles_feeding_into_this_tile.append(adjacent_prediction[i])
 		for i in adjacent_prediction.size():
-				if adjacent_prediction[i] and adjacent_prediction[i].element and adjacent_prediction[i].element is Arrow:
+				if adjacent_prediction[i] and adjacent_prediction[i].element:
 					if adjacent_prediction[i].element.recieving_directions.front() == get_opposite_direction(i):
 						tiles_recieving_from_this_tile.append(adjacent_prediction[i])
 						
