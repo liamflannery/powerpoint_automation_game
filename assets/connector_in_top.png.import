@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj2int62fmopv"
-path="res://.godot/imported/connector_out_bottom.png-b14c986ae3efab3b154fea17ab40cea9.ctex"
+uid="uid://qscdh7fqb6fr"
+path="res://.godot/imported/connector_in_top.png-8ba18b20cb5e87c06d8b319d10286e06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/connector_out_bottom.png"
-dest_files=["res://.godot/imported/connector_out_bottom.png-b14c986ae3efab3b154fea17ab40cea9.ctex"]
+source_file="res://assets/connector_in_top.png"
+dest_files=["res://.godot/imported/connector_in_top.png-8ba18b20cb5e87c06d8b319d10286e06.ctex"]
 
 [params]
 

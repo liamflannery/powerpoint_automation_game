@@ -11,15 +11,17 @@ enum DIRECTION{
 	WEST
 }
 
-@export var delete_button : Button
-
 @export_category("Objects")
 @export var texture_rect : TextureRect
 @export_category("Variables")
-@export var sending_directions : Array[DIRECTION]
-@export var recieving_directions : Array[DIRECTION]
+var sending_directions : Array[DIRECTION]
+var recieving_directions : Array[DIRECTION]
+@export var randomise_directions : bool
+@export var sending_ports : int
+@export var recieving_ports : int
 
 @export_category("Resources")
+@export var delete_button : Button
 @export var north_facing_texture : Texture2D
 @export var east_facing_texture : Texture2D
 @export var south_facing_texture : Texture2D
@@ -35,6 +37,10 @@ func _ready() -> void:
 		delete_button.hide()
 		delete_button.mouse_exited.connect(_hide_delete_button)
 		delete_button.pressed.connect(delete_element)
+	
+	
+
+
 
 func _show_delete_button():
 	if delete_button and !is_in_placement_mode(): delete_button.show()
@@ -71,6 +77,7 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 		in_recieving_directions = recieving_directions
 	recieving_directions = in_recieving_directions
 	sending_directions = in_sending_directions
+	set_connectors()
 	if in_sending_directions.is_empty() or !texture_rect:
 		return
 	match in_sending_directions[0]:
@@ -82,12 +89,69 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 			texture_rect.texture = south_facing_texture
 		DIRECTION.WEST:
 			texture_rect.texture = west_facing_texture
+func set_connectors():
+	if !is_instance_valid(%out_top):
+		return
+	
+	%out_top.hide()
+	%out_bottom.hide()
+	%out_left.hide()
+	%out_right.hide()
+	%in_top.hide()
+	%in_bottom.hide()
+	%in_left.hide()
+	%in_right.hide()
+	for dir in sending_directions:
+		match dir:
+			DIRECTION.NORTH:
+				%out_top.show()
+			DIRECTION.EAST:
+				%out_right.show()
+			DIRECTION.SOUTH:
+				%out_bottom.show()
+			DIRECTION.WEST:
+				%out_left.show()
+	for dir in recieving_directions:
+		match dir:
+			DIRECTION.NORTH:
+				%in_top.show()
+			DIRECTION.EAST:
+				%in_right.show()
+			DIRECTION.SOUTH:
+				%in_bottom.show()
+			DIRECTION.WEST:
+				%in_left.show()
 
 func element_placed(on_tile : Tile):
 	parent_tile = on_tile
 	reparent(parent_tile)
 	adjacent_tiles = Stage.get_main().get_adjacent_tiles(parent_tile)
 	placement_mode = false
+	if randomise_directions:
+		var available_directions : Array[int]
+		for i in adjacent_tiles.size():
+			if adjacent_tiles[i]:
+				available_directions.append(i)
+		var remaining_sending_ports = sending_ports
+		var remaining_recieving_ports = recieving_ports
+		for i in available_directions.size():
+			if remaining_sending_ports > 0 and remaining_recieving_ports > 0:
+				if i % 2 == 0:
+					sending_directions.append(available_directions[i])
+					remaining_sending_ports -= 1
+				else:
+					recieving_directions.append(available_directions[i])
+					remaining_recieving_ports -= 1
+			elif remaining_sending_ports > 0:
+					sending_directions.append(available_directions[i])
+					remaining_sending_ports -= 1
+			elif remaining_recieving_ports > 0:
+					recieving_directions.append(available_directions[i])
+					remaining_recieving_ports -= 1
+				
+		
+	reset_direction()
+	
 	placed.emit(false, self)
 
 func clear_placement_mode():

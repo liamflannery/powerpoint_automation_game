@@ -1,0 +1,2 @@
+extends ElementResource
+class_name ProducerResource

@@ -11,6 +11,7 @@ func _pressed() -> void:
 	for tile : Tile in Stage.get_main().get_tiles():
 		tile.texture = load("res://assets/tile_outline.png")
 	var cancelled = await element.placed
+	cancelled = cancelled[0]
 	for tile : Tile in Stage.get_main().get_tiles():
 		tile.texture = load("res://assets/tile_no_outline.png")
 		if tile.element: tile.element.reset_direction()

@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds5uf2qsne31v"]
+[gd_scene load_steps=11 format=3 uid="uid://ds5uf2qsne31v"]
 
 [ext_resource type="Texture2D" uid="uid://coa87tsugofly" path="res://assets/target.png" id="1_trwdl"]
 [ext_resource type="Script" uid="uid://bycy7jllq3rrv" path="res://scenes/elements/target.gd" id="2_trwdl"]
+[ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_3c7jw"]
+[ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_4yaup"]
+[ext_resource type="Texture2D" uid="uid://cev7rgbpe45rw" path="res://assets/connector_out_right.png" id="5_r1yn0"]
+[ext_resource type="Texture2D" uid="uid://xxaogvi436si" path="res://assets/connector_out_left.png" id="6_e0878"]
+[ext_resource type="Texture2D" uid="uid://qscdh7fqb6fr" path="res://assets/connector_in_top.png" id="7_4xh4d"]
+[ext_resource type="Texture2D" uid="uid://dduu3uamn8c6i" path="res://assets/connector_in_bottom.png" id="8_ryxyt"]
+[ext_resource type="Texture2D" uid="uid://00u7w0e4qk7" path="res://assets/connector_in_right.png" id="9_q73j1"]
+[ext_resource type="Texture2D" uid="uid://chaiohvwmfrh2" path="res://assets/connector_in_left.png" id="10_4g5d1"]
 
 [node name="target" type="TextureRect" node_paths=PackedStringArray("resource_counter")]
 custom_minimum_size = Vector2(80, 80)
@@ -22,7 +30,8 @@ stretch_mode = 5
 script = ExtResource("2_trwdl")
 resource_counter = NodePath("counter")
 max_resources_stored = 7
-recieving_directions = Array[int]([0, 1, 2, 3])
+randomise_directions = true
+recieving_ports = 4
 
 [node name="counter" type="Label" parent="."]
 layout_mode = 1
@@ -38,3 +47,107 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "0"
 horizontal_alignment = 1
+
+[node name="out_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("3_3c7jw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("4_4yaup")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("5_r1yn0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("6_e0878")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("7_4xh4d")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("8_ryxyt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("9_q73j1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("10_4g5d1")
+expand_mode = 1
+stretch_mode = 5

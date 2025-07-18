@@ -8,7 +8,7 @@ func _ready() -> void:
 
 
 func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions, in_recieving_directions : Array[DIRECTION] = recieving_directions):
-	pass
+	set_connectors()
 
 func activate_element():
 	element_activating = true

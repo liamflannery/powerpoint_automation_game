@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0hswxdbkr8g2"
-path="res://.godot/imported/connector_out_side.png-ba5dee975b9717bfa03c3e8cce9adad0.ctex"
+uid="uid://00u7w0e4qk7"
+path="res://.godot/imported/connector_in_right.png-04be9112de476603ea536f758c3e8a01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/connector_out_side.png"
-dest_files=["res://.godot/imported/connector_out_side.png-ba5dee975b9717bfa03c3e8cce9adad0.ctex"]
+source_file="res://assets/connector_in_right.png"
+dest_files=["res://.godot/imported/connector_in_right.png-04be9112de476603ea536f758c3e8a01.ctex"]
 
 [params]
 

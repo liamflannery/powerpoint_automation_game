@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c7clgtwiwt36u" path="res://assets/arrow_bend_right_down.png" id="7_5k1id"]
 [ext_resource type="Texture2D" uid="uid://ctc3d7sk6aqoi" path="res://assets/arrow_head.png" id="8_fyl8h"]
 
-[node name="arrow" type="TextureRect" node_paths=PackedStringArray("delete_button", "texture_rect")]
+[node name="arrow" type="TextureRect" node_paths=PackedStringArray("texture_rect", "delete_button")]
 custom_minimum_size = Vector2(95, 95)
 offset_right = 80.0
 offset_bottom = 80.0
@@ -22,10 +22,8 @@ corner_texture_left_up = ExtResource("3_tk65o")
 corner_texture_right_up = ExtResource("5_r1o5m")
 corner_texture_left_down = ExtResource("6_fyl8h")
 corner_texture_right_down = ExtResource("7_5k1id")
-delete_button = NodePath("delete_button")
 texture_rect = NodePath("MarginContainer2/arrow_body")
-sending_directions = Array[int]([2])
-recieving_directions = Array[int]([0])
+delete_button = NodePath("delete_button")
 north_facing_texture = ExtResource("1_vnigt")
 east_facing_texture = ExtResource("3_acd0x")
 south_facing_texture = ExtResource("1_vnigt")

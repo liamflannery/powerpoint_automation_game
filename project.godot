@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 
 Stage="*res://scenes/globals/stage.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [gui]
 
 theme/custom="uid://cvq2ttrxjysju"

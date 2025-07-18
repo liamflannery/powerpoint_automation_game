@@ -8,10 +8,14 @@ class_name Arrow
 @export var corner_texture_left_down : Texture2D
 @export var corner_texture_right_down : Texture2D
 
+func _ready() -> void:
+	super()
+	set_direction([1], [3])
+
 
 
 func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions, in_recieving_directions : Array[DIRECTION] = recieving_directions):
-	if sending_directions.is_empty() or recieving_directions.is_empty():
+	if in_sending_directions.is_empty() or in_recieving_directions.is_empty():
 		return
 	if Input.is_action_pressed("ui_accept"):
 		pass
@@ -80,7 +84,6 @@ func predict_direction(on_tile : Tile, initial = true):
 		combo_index = 0
 		if previous_tile: previous_tile.placeholder_element = null
 		previous_tile = on_tile
-		print(on_tile.name + " " + self.name)
 		on_tile.placeholder_element = self
 	adjacent_prediction = Stage.get_main().get_adjacent_tiles(on_tile)
 	if !initial:
@@ -163,7 +166,9 @@ func predict_direction(on_tile : Tile, initial = true):
 				if adjacent_prediction[tile_index] and adjacent_prediction[tile_index].element:
 					adjacent_prediction[tile_index].element.save_direction_state()
 					adjacent_prediction[tile_index].element.set_direction([new_send_to], [new_recieve_from])
-
+	else:
+		set_direction([1], [3])
+		
 	
 func can_change_sending_direction() -> bool:
 	return true

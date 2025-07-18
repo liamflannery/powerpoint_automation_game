@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://vepbdvqnx4yg"]
+[gd_scene load_steps=11 format=3 uid="uid://vepbdvqnx4yg"]
 
 [ext_resource type="Texture2D" uid="uid://dqvlbsplog4r6" path="res://assets/sender_icon.png" id="1_ynqw8"]
 [ext_resource type="Script" uid="uid://boyecrcmydq3y" path="res://scenes/elements/sender.gd" id="2_ynqw8"]
+[ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_ku1j6"]
+[ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_ybdqv"]
+[ext_resource type="Texture2D" uid="uid://cev7rgbpe45rw" path="res://assets/connector_out_right.png" id="5_b22rp"]
+[ext_resource type="Texture2D" uid="uid://xxaogvi436si" path="res://assets/connector_out_left.png" id="6_y23nm"]
+[ext_resource type="Texture2D" uid="uid://qscdh7fqb6fr" path="res://assets/connector_in_top.png" id="7_aico7"]
+[ext_resource type="Texture2D" uid="uid://dduu3uamn8c6i" path="res://assets/connector_in_bottom.png" id="8_iuacs"]
+[ext_resource type="Texture2D" uid="uid://00u7w0e4qk7" path="res://assets/connector_in_right.png" id="9_s6v5f"]
+[ext_resource type="Texture2D" uid="uid://chaiohvwmfrh2" path="res://assets/connector_in_left.png" id="10_2gb74"]
 
 [node name="sender" type="TextureRect" node_paths=PackedStringArray("delete_button")]
 custom_minimum_size = Vector2(80, 80)
@@ -20,9 +28,10 @@ texture = ExtResource("1_ynqw8")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_ynqw8")
+randomise_directions = true
+sending_ports = 1
+recieving_ports = 1
 delete_button = NodePath("delete_button")
-sending_directions = Array[int]([0, 1, 2, 3])
-recieving_directions = Array[int]([0, 1, 2, 3])
 
 [node name="delete_button" type="Button" parent="."]
 custom_minimum_size = Vector2(20, 20)
@@ -35,3 +44,107 @@ offset_bottom = 25.0
 grow_horizontal = 0
 theme_type_variation = &"ExitButton"
 text = "X"
+
+[node name="out_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("3_ku1j6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("4_ybdqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("5_b22rp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("6_y23nm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("7_aico7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("8_iuacs")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("9_s6v5f")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("10_2gb74")
+expand_mode = 1
+stretch_mode = 5
