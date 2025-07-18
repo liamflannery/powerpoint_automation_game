@@ -18,6 +18,12 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 
 Stage="*res://scenes/globals/stage.gd"
 
+[gui]
+
+theme/custom="uid://cvq2ttrxjysju"
+theme/custom_font="uid://7juthh775lhu"
+theme/default_font_multichannel_signed_distance_field=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

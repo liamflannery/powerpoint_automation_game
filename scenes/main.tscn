@@ -1,14 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=14 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da0dk4s05yj4u" path="res://scenes/elements/arrow.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://c2p5oqy7wp8yd" path="res://scenes/create_element_button.gd" id="2_tbgi4"]
+[ext_resource type="Script" uid="uid://dw763l1y4xdkd" path="res://scenes/add_page.gd" id="2_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dhq6bi50f76ec" path="res://scenes/elements/type_setter.tscn" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://d15xhe2njxijv" path="res://scenes/elements/colourer.tscn" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://h6t70kv7fgti" path="res://scenes/elements/merger.tscn" id="6_choun"]
 [ext_resource type="PackedScene" uid="uid://ds5uf2qsne31v" path="res://scenes/elements/target.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://ba65aiilrgm6r" path="res://scenes/game resources/data.tscn" id="7_tipki"]
+[ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://vepbdvqnx4yg" path="res://scenes/elements/sender.tscn" id="13_trceg"]
 
-[node name="main" type="Control" node_paths=PackedStringArray("tile_grid")]
+[node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +22,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jyhfs")
-tile_grid = NodePath("VBoxContainer/HBoxContainer/ColorRect2/GridContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -31,227 +36,473 @@ offset_right = 577.0
 offset_bottom = 324.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+[node name="TopPanel" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
-color = Color(0.231373, 0.290196, 0.333333, 1)
+theme_type_variation = &"TopPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopPanel"]
+layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ColorRect/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopPanel/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Arrow" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
+[node name="Add Page" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Add Page"
+script = ExtResource("2_ya4ey")
+
+[node name="Arrow" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Arrow"
 script = ExtResource("2_tbgi4")
 element_scene = ExtResource("2_0xm2m")
+multi_place = true
 
-[node name="LineGraphMaker" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
+[node name="Graph Stamper" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-text = "Line Graph Maker"
+text = "Graph Stamper"
 script = ExtResource("2_tbgi4")
+element_scene = ExtResource("4_85g3d")
 
-[node name="Colourer" type="Button" parent="VBoxContainer/ColorRect/MarginContainer/HBoxContainer"]
+[node name="Colourer" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 text = "Colourer"
 script = ExtResource("2_tbgi4")
 element_scene = ExtResource("4_tefeu")
 
+[node name="Merger" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Merger"
+script = ExtResource("2_tbgi4")
+element_scene = ExtResource("6_choun")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+[node name="SidePanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-color = Color(0.133333, 0.2, 0.227451, 1)
+mouse_filter = 2
+theme_type_variation = &"SidePanel"
+script = ExtResource("8_eb6dy")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/SidePanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PreviewsParent" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/SidePanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/SidePanel/MarginContainer/PreviewsParent"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"Sheet"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/SidePanel/MarginContainer/PreviewsParent/PanelContainer"]
+layout_mode = 2
+theme_type_variation = &"InvisibleButton"
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/HBoxContainer/SidePanel/MarginContainer/PreviewsParent"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"Sheet"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/SidePanel/MarginContainer/PreviewsParent/PanelContainer2"]
+layout_mode = 2
+theme_type_variation = &"InvisibleButton"
 
 [node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 color = Color(0, 0.121569, 0.14902, 1)
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/ColorRect2"]
+[node name="PageParent" type="PanelContainer" parent="VBoxContainer/HBoxContainer/ColorRect2"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -475.0
-offset_top = -237.5
-offset_right = 475.0
-offset_bottom = 237.5
+offset_left = -478.0
+offset_top = -241.0
+offset_right = 479.0
+offset_bottom = 241.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+theme_type_variation = &"Sheet"
+
+[node name="page_1" type="GridContainer" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent"]
+layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 10
 
-[node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile2" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="graph" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile" instance=ExtResource("3_sugp2")]
+layout_mode = 1
+producing_resource = ExtResource("7_tipki")
+
+[node name="tile2" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile3" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile3" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile4" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
-layout_mode = 2
-starting_element = ExtResource("3_sugp2")
-
-[node name="tile5" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile4" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile6" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile5" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile7" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile6" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile8" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile7" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile9" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile8" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile10" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile9" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile11" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile10" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile12" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="sender" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile10" instance=ExtResource("13_trceg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="tile11" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile13" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile12" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile14" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile13" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile15" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile14" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile16" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile15" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile17" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile16" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile18" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile17" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile19" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile18" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile19" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile22" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile22" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile25" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile26" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile25" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile26" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 starting_element = ExtResource("7_o6xl0")
 
-[node name="tile27" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile27" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile28" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile28" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile29" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile29" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile30" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile30" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile31" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile31" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile32" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile32" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile33" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile33" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile34" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile34" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile35" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile35" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile36" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile36" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile37" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile37" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile38" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile38" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile39" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile39" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile40" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile40" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile41" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile41" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile42" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile42" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile43" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile43" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile44" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile44" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile45" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile45" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile46" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile46" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile47" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile47" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile48" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile48" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile49" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile49" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile50" parent="VBoxContainer/HBoxContainer/ColorRect2/GridContainer" instance=ExtResource("1_ig7tw")]
+[node name="tile50" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="page_2" type="GridContainer" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 10
+
+[node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile2" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile3" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile4" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile5" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile6" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile7" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile8" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile9" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile10" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="sender" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2/tile10" node_paths=PackedStringArray("connected_sender") instance=ExtResource("13_trceg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+connected_sender = NodePath("../../../page_1/tile10/sender")
+
+[node name="tile11" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile12" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile13" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile14" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile15" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile16" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile17" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile18" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile19" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile22" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile25" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile26" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile27" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile28" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile29" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile30" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile31" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile32" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile33" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile34" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile35" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile36" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile37" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile38" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile39" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile40" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile41" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="graph" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2/tile41" instance=ExtResource("3_sugp2")]
+layout_mode = 1
+
+[node name="tile42" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile43" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile44" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile45" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile46" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile47" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile48" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile49" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
+layout_mode = 2
+
+[node name="tile50" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

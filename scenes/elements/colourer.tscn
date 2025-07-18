@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dvntu0g1p33em" path="res://assets/element_images/colourer.png" id="1_hv18i"]
 [ext_resource type="Script" uid="uid://csq87y22n3f0i" path="res://scenes/elements/colourer.gd" id="2_hv18i"]
 
-[node name="colourer" type="TextureRect"]
+[node name="colourer" type="TextureRect" node_paths=PackedStringArray("delete_button")]
 custom_minimum_size = Vector2(80, 80)
 anchors_preset = 8
 anchor_left = 0.5
@@ -20,5 +20,18 @@ texture = ExtResource("1_hv18i")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_hv18i")
+delete_button = NodePath("delete_button")
 sending_directions = Array[int]([0, 1, 2, 3])
 recieving_directions = Array[int]([0, 1, 2, 3])
+
+[node name="delete_button" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 25.0
+grow_horizontal = 0
+theme_type_variation = &"ExitButton"
+text = "X"

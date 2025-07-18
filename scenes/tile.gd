@@ -2,12 +2,24 @@ extends Control
 class_name Tile
 
 @export var starting_element : PackedScene
-var element : Element
+var element : Element :
+	get():
+		if !is_instance_valid(element):
+			return null
+		else:
+			return element
+var placeholder_element : Element 
+		
 
 func _ready() -> void:
 	await Stage.main_registered
+	for child in get_children():
+		if child is Element:
+			element = child
+			child.element_placed(self)
 	if starting_element:
 		set_element(starting_element)
+	
 
 	
 func set_element(element_packed_scene : PackedScene):
@@ -16,7 +28,12 @@ func set_element(element_packed_scene : PackedScene):
 	element = element_scene
 	element.element_placed(self)
 
+func clear_element():
+	if element in get_children():
+		remove_child(element)
+	element = null
 
+	
 #var timer : float
 #func _process(delta: float) -> void:
 	#timer += delta + randf() * 0.001

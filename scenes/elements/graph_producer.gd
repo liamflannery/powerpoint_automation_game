@@ -3,7 +3,12 @@ class_name Producer
 @export var producing_resource : PackedScene
 
 func _ready() -> void:
+	super()
 	activate_element()
+
+
+func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions, in_recieving_directions : Array[DIRECTION] = recieving_directions):
+	pass
 
 func activate_element():
 	element_activating = true

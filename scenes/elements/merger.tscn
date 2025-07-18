@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://h6t70kv7fgti"]
+
+[ext_resource type="Texture2D" uid="uid://bu3a7jb8wtcpx" path="res://assets/graph_stamper.png" id="1_e4x7s"]
+[ext_resource type="Script" uid="uid://cxq1vt4vg5hhg" path="res://scenes/elements/merger.gd" id="2_p75dm"]
+
+[node name="merger" type="TextureRect" node_paths=PackedStringArray("delete_button")]
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_e4x7s")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_p75dm")
+max_resources_stored = 2
+delete_button = NodePath("delete_button")
+sending_directions = Array[int]([0, 1, 2, 3])
+recieving_directions = Array[int]([0, 1, 2, 3])
+
+[node name="delete_button" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 25.0
+grow_horizontal = 0
+theme_type_variation = &"ExitButton"
+text = "X"
