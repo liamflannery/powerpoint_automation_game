@@ -31,8 +31,6 @@ stretch_mode = 5
 script = ExtResource("2_iludv")
 producing_resource = ExtResource("3_h4iiy")
 texture_rect = NodePath(".")
-randomise_directions = true
-sending_ports = 2
 
 [node name="out_top" type="TextureRect" parent="."]
 unique_name_in_owner = true

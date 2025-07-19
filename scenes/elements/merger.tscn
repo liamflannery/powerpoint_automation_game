@@ -29,9 +29,6 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_p75dm")
 max_resources_stored = 2
-randomise_directions = true
-sending_ports = 1
-recieving_ports = 2
 delete_button = NodePath("delete_button")
 
 [node name="delete_button" type="Button" parent="."]

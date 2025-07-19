@@ -14,11 +14,14 @@ enum DIRECTION{
 @export_category("Objects")
 @export var texture_rect : TextureRect
 @export_category("Variables")
+enum PORT_STATUS{SENDING, RECEIVING, BLOCKED}
+@export var north_port : PORT_STATUS
+@export var east_port : PORT_STATUS
+@export var south_port : PORT_STATUS
+@export var west_port : PORT_STATUS
 var sending_directions : Array[DIRECTION]
 var recieving_directions : Array[DIRECTION]
-@export var randomise_directions : bool
-@export var sending_ports : int
-@export var recieving_ports : int
+
 
 @export_category("Resources")
 @export var delete_button : Button
@@ -37,7 +40,28 @@ func _ready() -> void:
 		delete_button.hide()
 		delete_button.mouse_exited.connect(_hide_delete_button)
 		delete_button.pressed.connect(delete_element)
-	
+	_initialise_ports()
+
+func _initialise_ports():
+	sending_directions.clear()
+	recieving_directions.clear()
+	if north_port == PORT_STATUS.SENDING:
+		sending_directions.append(0)
+	if north_port == PORT_STATUS.RECEIVING:
+		recieving_directions.append(0)
+	if east_port == PORT_STATUS.SENDING:
+		sending_directions.append(1)
+	if east_port == PORT_STATUS.RECEIVING:
+		recieving_directions.append(1)
+	if south_port == PORT_STATUS.SENDING:
+		sending_directions.append(2)
+	if south_port == PORT_STATUS.RECEIVING:
+		recieving_directions.append(2)
+	if west_port == PORT_STATUS.SENDING:
+		sending_directions.append(3)
+	if west_port == PORT_STATUS.RECEIVING:
+		recieving_directions.append(3)
+	set_direction()
 	
 
 
@@ -52,11 +76,19 @@ func delete_element():
 		resource.queue_free()
 	queue_free()
 
-func change_direction():
-	pass
 
+func change_direction():
+	for i in sending_directions.size():
+		sending_directions[i] = get_clockwise_direction(sending_directions[i])
+	for i in recieving_directions.size():
+		recieving_directions[i] = get_clockwise_direction(recieving_directions[i])
+	set_direction()
+	
 func predict_direction(on_tile : Tile):
 	pass
+
+
+
 
 func reset_tile(tile : Tile):
 	pass
@@ -122,35 +154,24 @@ func set_connectors():
 			DIRECTION.WEST:
 				%in_left.show()
 
+func element_connected() -> bool:
+	for sending_dir in sending_directions:
+		if adjacent_tiles[sending_dir] and adjacent_tiles[sending_dir].element and adjacent_tiles[sending_dir].element.recieving_directions.has(get_opposite_direction(sending_dir)):
+			return true
+	for recieving_dir in sending_directions:
+		if adjacent_tiles[recieving_dir] and adjacent_tiles[recieving_dir].element and adjacent_tiles[recieving_dir].element.sending_directions.has(get_opposite_direction(recieving_dir)):
+			return true
+	return false
+
 func element_placed(on_tile : Tile):
 	parent_tile = on_tile
 	reparent(parent_tile)
 	adjacent_tiles = Stage.get_main().get_adjacent_tiles(parent_tile)
 	placement_mode = false
-	if randomise_directions:
-		var available_directions : Array[int]
-		for i in adjacent_tiles.size():
-			if adjacent_tiles[i]:
-				available_directions.append(i)
-		var remaining_sending_ports = sending_ports
-		var remaining_recieving_ports = recieving_ports
-		for i in available_directions.size():
-			if remaining_sending_ports > 0 and remaining_recieving_ports > 0:
-				if i % 2 == 0:
-					sending_directions.append(available_directions[i])
-					remaining_sending_ports -= 1
-				else:
-					recieving_directions.append(available_directions[i])
-					remaining_recieving_ports -= 1
-			elif remaining_sending_ports > 0:
-					sending_directions.append(available_directions[i])
-					remaining_sending_ports -= 1
-			elif remaining_recieving_ports > 0:
-					recieving_directions.append(available_directions[i])
-					remaining_recieving_ports -= 1
+	
 				
 		
-	reset_direction()
+
 	
 	placed.emit(false, self)
 
@@ -275,8 +296,7 @@ func send_resource(sent_resource : GameResource, reactivate=true):
 	resource_sending = false
 
 func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:
-	if sending_element is not Arrow and self is not Arrow:
-		return false
+
 	
 	var direction_correct = false
 	for direction in recieving_directions:

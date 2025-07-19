@@ -13,6 +13,8 @@ var placeholder_element : Element
 
 func _ready() -> void:
 	await Stage.main_registered
+	mouse_entered.connect(Stage.mouse_just_entered_tile.bind(self))
+	mouse_exited.connect(Stage.mouse_just_exited_tile.bind(self))
 	for child in get_children():
 		if child is Element:
 			element = child

@@ -28,9 +28,8 @@ texture = ExtResource("1_hv18i")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_hv18i")
-randomise_directions = true
-sending_ports = 2
-recieving_ports = 2
+south_port = 1
+west_port = 1
 delete_button = NodePath("delete_button")
 
 [node name="delete_button" type="Button" parent="."]

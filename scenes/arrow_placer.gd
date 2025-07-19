@@ -1,7 +1,10 @@
 extends Button
 
 @export var element_scene : PackedScene
-@export var multi_place := false
+var arrow_placement_mode : bool = false
+func _ready() -> void:
+	Stage.mouse_entered_tile.connect(mouse_moved_to_tile)
+
 func _pressed() -> void:
 	if !element_scene:
 		return
@@ -13,8 +16,11 @@ func _pressed() -> void:
 	var placed_signal = await element.placed
 	var cancelled = placed_signal[0]
 	var placed_element = placed_signal[1]
-	if !cancelled:
-		await Stage.mouse_exited_tile
+	element = element_scene.instantiate()
+	Stage.get_main().add_child(element)
+	arrow_placement_mode = false
+	
+	
 	for tile : Tile in Stage.get_main().get_tiles():
 		tile.texture = load("res://assets/tile_no_outline.png")
 		if tile.element:
@@ -22,7 +28,9 @@ func _pressed() -> void:
 				tile.element.reset_direction()
 		
 	disabled = false
-	if multi_place and !cancelled: 
+	if  !cancelled: 
 		
 		_pressed()
-	
+
+func mouse_moved_to_tile(to_tile : Tile):
+	pass

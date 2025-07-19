@@ -28,9 +28,6 @@ texture = ExtResource("1_ynqw8")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_ynqw8")
-randomise_directions = true
-sending_ports = 1
-recieving_ports = 1
 delete_button = NodePath("delete_button")
 
 [node name="delete_button" type="Button" parent="."]

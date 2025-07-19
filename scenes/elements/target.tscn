@@ -30,8 +30,6 @@ stretch_mode = 5
 script = ExtResource("2_trwdl")
 resource_counter = NodePath("counter")
 max_resources_stored = 7
-randomise_directions = true
-recieving_ports = 4
 
 [node name="counter" type="Label" parent="."]
 layout_mode = 1
