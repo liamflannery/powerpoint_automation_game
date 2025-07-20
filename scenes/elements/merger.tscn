@@ -28,7 +28,7 @@ texture = ExtResource("1_5q2ry")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_p75dm")
-max_resources_stored = 2
+max_queued_resources = 2
 north_port = 1
 east_port = 1
 

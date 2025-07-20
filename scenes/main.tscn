@@ -308,6 +308,20 @@ layout_mode = 2
 [node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile20" instance=ExtResource("13_yc10j")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -316,6 +330,21 @@ layout_mode = 2
 
 [node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
+[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile23" instance=ExtResource("13_yc10j")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+producing_resource = ExtResource("19_0ld40")
 
 [node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

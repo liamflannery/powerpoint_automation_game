@@ -13,8 +13,9 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 
 func activate_element():
 	element_activating = true
+	await get_tree().create_timer(1).timeout
 	if !producing_resource: return
-	if queued_resources.size() < max_resources_stored:
+	if queued_resources.size() < max_queued_resources:
 		var new_resource : GameResource = producing_resource.instantiate()
 		add_child(new_resource)
 		queued_resources.append(new_resource)

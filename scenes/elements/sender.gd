@@ -35,7 +35,7 @@ func send_resource(sent_resource : GameResource, sending_element : Element):
 
 
 func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:
-	return queued_resources.size() < max_resources_stored and processed_resources.size() < max_resources_stored
+	return queued_resources.size() < max_queued_resources and processed_resources.size() < max_processed_resources
 
 func get_send_to() -> Array[Tile]:
 	var normal_send_to : Array[Tile] = super()

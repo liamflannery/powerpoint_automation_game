@@ -1,7 +1,8 @@
 extends Control
 class_name Element
 signal placed(cancelled:bool, element : Element)
-@export var max_resources_stored : int = 1
+@export var max_queued_resources : int = 1
+@export var max_processed_resources : int = 1
 var queued_resources : Array[GameResource]
 var processed_resources : Array[GameResource]
 enum DIRECTION{
@@ -291,7 +292,7 @@ func can_recieve_resource(sending_element : Element, sending_resource : GameReso
 	for direction in recieving_directions:
 		if sending_element.sending_directions.map(func(dir): return get_opposite_direction(dir)).has(direction):
 			direction_correct = true
-	return queued_resources.size() < max_resources_stored and processed_resources.size() < max_resources_stored and direction_correct
+	return queued_resources.size() < max_queued_resources and processed_resources.size() < max_processed_resources and direction_correct
 
 
 var previous_directions : Array[Array]
