@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmoorrabwl0vt"]
+
+[ext_resource type="Texture2D" uid="uid://darbvyve06342" path="res://assets/star_wipe.png" id="1_gxda6"]
+[ext_resource type="Script" uid="uid://xhs86oaxmxge" path="res://scenes/game resources/individual_resource.gd" id="2_gxda6"]
+
+[node name="title" type="TextureRect"]
+custom_minimum_size = Vector2(30, 30)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_gxda6")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_gxda6")
+this_type = 2

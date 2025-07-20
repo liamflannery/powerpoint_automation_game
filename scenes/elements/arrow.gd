@@ -98,14 +98,14 @@ func predict_direction(on_tile : Tile, initial = true):
 	var tiles_recieving_from_this_tile : Array[Tile]
 	var blank_tiles : Array[int]
 	var combos_dict : Array[Array] #[[sending to, recieving from, [[tile direction, sending to, recieving from ]]
-	#for i in adjacent_prediction.size():
-			#if adjacent_prediction[i] and adjacent_prediction[i].element:
-				#if adjacent_prediction[i].element.sending_directions.has(get_opposite_direction(i)):
-					#tiles_feeding_into_this_tile.append(adjacent_prediction[i])
-				#if adjacent_prediction[i].element.recieving_directions.has(get_opposite_direction(i)):
-					#tiles_recieving_from_this_tile.append(adjacent_prediction[i])
-			#elif adjacent_prediction[i]:
-				#blank_tiles.append(i)
+	for i in adjacent_prediction.size():
+			if adjacent_prediction[i] and adjacent_prediction[i].element:
+				if adjacent_prediction[i].element.sending_directions.has(get_opposite_direction(i)):
+					tiles_feeding_into_this_tile.append(adjacent_prediction[i])
+				if adjacent_prediction[i].element.recieving_directions.has(get_opposite_direction(i)):
+					tiles_recieving_from_this_tile.append(adjacent_prediction[i])
+			elif adjacent_prediction[i]:
+				blank_tiles.append(i)
 					#
 	#if !tiles_feeding_into_this_tile.is_empty() and !tiles_recieving_from_this_tile.is_empty():
 		#for receiving_from : Tile in tiles_feeding_into_this_tile:

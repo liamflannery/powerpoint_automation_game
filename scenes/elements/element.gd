@@ -25,10 +25,7 @@ var recieving_directions : Array[DIRECTION]
 
 @export_category("Resources")
 @export var delete_button : Button
-@export var north_facing_texture : Texture2D
-@export var east_facing_texture : Texture2D
-@export var south_facing_texture : Texture2D
-@export var west_facing_texture : Texture2D
+
 
 var parent_tile : Tile
 var adjacent_tiles : Array[Tile]
@@ -112,15 +109,7 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 	set_connectors()
 	if in_sending_directions.is_empty() or !texture_rect:
 		return
-	match in_sending_directions[0]:
-		DIRECTION.NORTH: 
-			texture_rect.texture = north_facing_texture
-		DIRECTION.EAST:
-			texture_rect.texture = east_facing_texture
-		DIRECTION.SOUTH:
-			texture_rect.texture = south_facing_texture
-		DIRECTION.WEST:
-			texture_rect.texture = west_facing_texture
+
 func set_connectors():
 	if !is_instance_valid(%out_top):
 		return
@@ -253,7 +242,7 @@ func _process(delta: float) -> void:
 				if !movement_tween or !movement_tween.is_running():
 					var sending_resource = processed_resources.back()
 					processed_resources.erase(sending_resource)
-					await tile.element.send_resource(sending_resource)
+					await tile.element.send_resource(sending_resource, self)
 	
 	if _ready_to_activate():
 		await activate_element()
@@ -284,7 +273,7 @@ func _ready_to_activate() -> bool:
 
 var movement_tween : Tween
 var resource_sending : bool = false
-func send_resource(sent_resource : GameResource, reactivate=true):
+func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = true
 	if movement_tween and movement_tween.is_running():
 		movement_tween.kill()

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bdvrk18gstbel" path="res://assets/producer_tile.png" id="1_h4iiy"]
 [ext_resource type="Script" uid="uid://dqyui5cet7mee" path="res://scenes/elements/graph_producer.gd" id="2_iludv"]
-[ext_resource type="PackedScene" uid="uid://jitx6piepqug" path="res://scenes/game resources/diamond.tscn" id="3_h4iiy"]
+[ext_resource type="PackedScene" uid="uid://jitx6piepqug" path="res://scenes/game resources/slide.tscn" id="3_h4iiy"]
 
 [node name="graph" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
 custom_minimum_size = Vector2(80, 80)
@@ -23,4 +23,17 @@ stretch_mode = 5
 script = ExtResource("2_iludv")
 producing_resource = ExtResource("3_h4iiy")
 texture_rect = NodePath(".")
-sending_directions = Array[int]([0, 1, 2, 3])
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2

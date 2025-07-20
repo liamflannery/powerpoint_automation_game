@@ -45,7 +45,11 @@ func get_adjacent_tiles(to_tile : Tile) -> Array[Tile]:
 	
 	return adjacent_tiles
 
-
+func get_page(to_tile : Tile) -> Page:
+	for page in %PageParent.get_children():
+		if page.get_children().has(to_tile):
+			return page
+	return null
 
 func get_tiles() -> Array[Tile]:
 	var tiles : Array[Tile]

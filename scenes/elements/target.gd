@@ -8,13 +8,14 @@ var counter : int = 0:
 		counter = value
 		resource_counter.text = str(value)
 func _ready() -> void:
-	target_resource = load("res://scenes/game resources/diamond.tscn").instantiate()
-	add_child(target_resource)
-	target_resource.pivot_offset = target_resource.size/2
-	target_resource.scale *= 0.8
-	target_resource.set_colour(Color("#006FC1"))
-	target_resource.set_data("123")
-	target_resource.set_type(load("res://assets/graph_icon.png"))
+	#target_resource = load("res://scenes/game resources/diamond.tscn").instantiate()
+	#add_child(target_resource)
+	#target_resource.pivot_offset = target_resource.size/2
+	#target_resource.scale *= 0.8
+	#target_resource.set_colour(Color("#006FC1"))
+	#target_resource.set_data("123")
+	#target_resource.set_type(load("res://assets/graph_icon.png"))
+	super()
 
 
 func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:

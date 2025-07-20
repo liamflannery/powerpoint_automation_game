@@ -1,16 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://ds5uf2qsne31v"]
+[gd_scene load_steps=11 format=3 uid="uid://d1rrpk272twxq"]
 
-[ext_resource type="Script" uid="uid://bycy7jllq3rrv" path="res://scenes/elements/target.gd" id="2_trwdl"]
-[ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_3c7jw"]
-[ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_4yaup"]
-[ext_resource type="Texture2D" uid="uid://cev7rgbpe45rw" path="res://assets/connector_out_right.png" id="5_r1yn0"]
-[ext_resource type="Texture2D" uid="uid://xxaogvi436si" path="res://assets/connector_out_left.png" id="6_e0878"]
-[ext_resource type="Texture2D" uid="uid://qscdh7fqb6fr" path="res://assets/connector_in_top.png" id="7_4xh4d"]
-[ext_resource type="Texture2D" uid="uid://dduu3uamn8c6i" path="res://assets/connector_in_bottom.png" id="8_ryxyt"]
-[ext_resource type="Texture2D" uid="uid://00u7w0e4qk7" path="res://assets/connector_in_right.png" id="9_q73j1"]
-[ext_resource type="Texture2D" uid="uid://chaiohvwmfrh2" path="res://assets/connector_in_left.png" id="10_4g5d1"]
+[ext_resource type="Texture2D" uid="uid://dv6spmktqtths" path="res://assets/merger.png" id="1_0jbn8"]
+[ext_resource type="Script" uid="uid://cxq1vt4vg5hhg" path="res://scenes/elements/slide_grouper_1.gd" id="2_0jbn8"]
+[ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_ac52k"]
+[ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_fbha5"]
+[ext_resource type="Texture2D" uid="uid://cev7rgbpe45rw" path="res://assets/connector_out_right.png" id="5_ytm78"]
+[ext_resource type="Texture2D" uid="uid://xxaogvi436si" path="res://assets/connector_out_left.png" id="6_6yt24"]
+[ext_resource type="Texture2D" uid="uid://qscdh7fqb6fr" path="res://assets/connector_in_top.png" id="7_c0pqv"]
+[ext_resource type="Texture2D" uid="uid://dduu3uamn8c6i" path="res://assets/connector_in_bottom.png" id="8_l01qb"]
+[ext_resource type="Texture2D" uid="uid://00u7w0e4qk7" path="res://assets/connector_in_right.png" id="9_yly0f"]
+[ext_resource type="Texture2D" uid="uid://chaiohvwmfrh2" path="res://assets/connector_in_left.png" id="10_32rl7"]
 
-[node name="target" type="TextureRect"]
+[node name="slide_grouper" type="TextureRect" node_paths=PackedStringArray("texture_rect", "delete_button")]
 custom_minimum_size = Vector2(80, 80)
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,47 +24,55 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_0jbn8")
 expand_mode = 1
 stretch_mode = 5
-script = ExtResource("2_trwdl")
-max_resources_stored = 7
-north_port = 2
-east_port = 2
+script = ExtResource("2_0jbn8")
+max_resources_stored = 3
+texture_rect = NodePath(".")
+east_port = 1
 south_port = 1
-west_port = 2
+west_port = 1
+delete_button = NodePath("delete_button")
+
+[node name="delete_button" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 25.0
+grow_horizontal = 0
+theme_type_variation = &"ExitButton"
+text = "X"
 
 [node name="out_top" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = -7.0
 offset_bottom = 6.0
 grow_horizontal = 2
-texture = ExtResource("3_3c7jw")
+texture = ExtResource("3_ac52k")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="out_bottom" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 70.0
 offset_bottom = 83.0
 grow_horizontal = 2
-texture = ExtResource("4_4yaup")
+texture = ExtResource("4_fbha5")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="out_right" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -72,14 +81,12 @@ offset_top = 17.0
 offset_right = 5.0
 offset_bottom = 60.0
 grow_horizontal = 2
-texture = ExtResource("5_r1yn0")
+texture = ExtResource("5_ytm78")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="out_left" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -88,42 +95,36 @@ offset_top = 17.0
 offset_right = -72.0
 offset_bottom = 60.0
 grow_horizontal = 2
-texture = ExtResource("6_e0878")
+texture = ExtResource("6_6yt24")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="in_top" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = -7.0
 offset_bottom = 6.0
 grow_horizontal = 2
-texture = ExtResource("7_4xh4d")
+texture = ExtResource("7_c0pqv")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="in_bottom" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 70.0
 offset_bottom = 83.0
 grow_horizontal = 2
-texture = ExtResource("8_ryxyt")
+texture = ExtResource("8_l01qb")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="in_right" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -132,14 +133,12 @@ offset_top = 17.0
 offset_right = 5.0
 offset_bottom = 60.0
 grow_horizontal = 2
-texture = ExtResource("9_q73j1")
+texture = ExtResource("9_yly0f")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="in_left" type="TextureRect" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -148,6 +147,6 @@ offset_top = 17.0
 offset_right = -72.0
 offset_bottom = 60.0
 grow_horizontal = 2
-texture = ExtResource("10_4g5d1")
+texture = ExtResource("10_32rl7")
 expand_mode = 1
 stretch_mode = 5

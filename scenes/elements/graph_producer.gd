@@ -3,7 +3,8 @@ class_name Producer
 @export var producing_resource : PackedScene
 
 func _ready() -> void:
-	super()
+	await super()
+	%resource_icon.texture = producing_resource.instantiate().texture
 	activate_element()
 
 
