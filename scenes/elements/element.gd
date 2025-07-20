@@ -39,6 +39,9 @@ func _ready() -> void:
 		delete_button.mouse_exited.connect(_hide_delete_button)
 		delete_button.pressed.connect(delete_element)
 	_initialise_ports()
+	if self is not Arrow:
+		z_as_relative = false
+		z_index = 4
 
 func _initialise_ports():
 	sending_directions.clear()
@@ -65,7 +68,7 @@ func _initialise_ports():
 
 
 func _show_delete_button():
-	if delete_button and !is_in_placement_mode(): delete_button.show()
+	if delete_button and !Stage.get_main().arrow_placement_mode and !is_in_placement_mode(): delete_button.show()
 func _hide_delete_button():
 	if delete_button and !delete_button.get_global_rect().has_point(get_global_mouse_position()) and !get_global_rect().has_point(get_global_mouse_position()): delete_button.hide()
 func delete_element():

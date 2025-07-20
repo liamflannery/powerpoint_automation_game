@@ -1,6 +1,7 @@
 extends Control
 class_name Tile
-
+@export var highlighted_tile_texture : Texture
+var original_texture : Texture
 @export var starting_element : PackedScene
 var element : Element :
 	get():
@@ -12,6 +13,7 @@ var placeholder_element : Element
 		
 
 func _ready() -> void:
+	original_texture = self.texture
 	await Stage.main_registered
 	mouse_entered.connect(Stage.mouse_just_entered_tile.bind(self))
 	mouse_exited.connect(Stage.mouse_just_exited_tile.bind(self))
@@ -35,6 +37,12 @@ func clear_element():
 		remove_child(element)
 	element = null
 
+	
+func highlight_tile():
+	self.texture = highlighted_tile_texture	
+
+func reset_tile():
+	self.texture = original_texture
 	
 #var timer : float
 #func _process(delta: float) -> void:

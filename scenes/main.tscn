@@ -1,24 +1,26 @@
-[gd_scene load_steps=21 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=23 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://da0dk4s05yj4u" path="res://scenes/elements/arrow.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://c2p5oqy7wp8yd" path="res://scenes/create_element_button.gd" id="2_tbgi4"]
 [ext_resource type="Script" uid="uid://dw763l1y4xdkd" path="res://scenes/add_page.gd" id="2_ya4ey"]
+[ext_resource type="Script" uid="uid://1ynic2q4y10r" path="res://scenes/arrow_placer.gd" id="3_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://d1rrpk272twxq" path="res://scenes/elements/slide_grouper.tscn" id="5_yc10j"]
 [ext_resource type="PackedScene" uid="uid://h6t70kv7fgti" path="res://scenes/elements/merger.tscn" id="6_choun"]
 [ext_resource type="PackedScene" uid="uid://ds5uf2qsne31v" path="res://scenes/elements/target.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
+[ext_resource type="Script" uid="uid://c6e2qdprhr2ea" path="res://scenes/clear_all.gd" id="8_jscy8"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://b2o788mtkau0k" path="res://assets/reciever.png" id="11_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="13_trceg"]
-[ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/element.tscn" id="13_yc10j"]
 [ext_resource type="PackedScene" uid="uid://ba65aiilrgm6r" path="res://scenes/game resources/slide_title.tscn" id="14_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cm3oaikfh4d10" path="res://scenes/game resources/blue_colour.tscn" id="15_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://hkqel2o3rxsu" path="res://scenes/game resources/pink_colour.tscn" id="16_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://mrmwb1epdojk" path="res://scenes/game resources/number_resource.tscn" id="17_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://s3xjksqcly6e" path="res://scenes/game resources/graph_resource.tscn" id="18_0ld40"]
 [ext_resource type="PackedScene" uid="uid://bmoorrabwl0vt" path="res://scenes/game resources/star_wipe.tscn" id="19_0ld40"]
+[ext_resource type="PackedScene" uid="uid://diu2gn0a5do18" path="res://scenes/game resources/quote_resource.tscn" id="19_gqmmt"]
 [ext_resource type="PackedScene" uid="uid://bphndy3cbf4xj" path="res://scenes/game resources/fade.tscn" id="20_gqmmt"]
 
 [node name="main" type="Control"]
@@ -71,9 +73,7 @@ script = ExtResource("2_ya4ey")
 layout_mode = 2
 size_flags_vertical = 4
 text = "Arrow"
-script = ExtResource("2_tbgi4")
-element_scene = ExtResource("2_0xm2m")
-multi_place = true
+script = ExtResource("3_dp3eg")
 
 [node name="Slide_Grouper" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -88,6 +88,19 @@ size_flags_vertical = 4
 text = "Merger"
 script = ExtResource("2_tbgi4")
 element_scene = ExtResource("6_choun")
+
+[node name="Sorter" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Sorter"
+script = ExtResource("2_tbgi4")
+element_scene = ExtResource("7_yc10j")
+
+[node name="ClearAll" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Clear All Resources"
+script = ExtResource("8_jscy8")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -198,7 +211,8 @@ script = ExtResource("9_eb6dy")
 [node name="tile" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile"]
+[node name="target2" type="TextureRect" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile"]
+unique_name_in_owner = true
 z_index = 1
 z_as_relative = false
 layout_mode = 0
@@ -209,20 +223,21 @@ offset_bottom = 89.0
 texture = ExtResource("11_ya4ey")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile/TextureRect"]
+[node name="produced_label" type="Label" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile/target2"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -26.0
-offset_right = -8.0
-offset_bottom = -6.33334
+offset_left = -70.0
+offset_top = -55.0
+offset_right = -14.0
+offset_bottom = -35.3333
 grow_horizontal = 0
 grow_vertical = 0
-text = "23/100"
+text = "0"
 
 [node name="target" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
@@ -308,20 +323,6 @@ layout_mode = 2
 [node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile20" instance=ExtResource("13_yc10j")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 80.0
-offset_bottom = 80.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="tile21" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -330,21 +331,6 @@ layout_mode = 2
 
 [node name="tile23" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-
-[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1/tile23" instance=ExtResource("13_yc10j")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 80.0
-offset_bottom = 80.0
-grow_horizontal = 1
-grow_vertical = 1
-producing_resource = ExtResource("19_0ld40")
 
 [node name="tile24" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
@@ -476,7 +462,7 @@ layout_mode = 2
 [node name="tile19" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2/tile19" instance=ExtResource("13_yc10j")]
+[node name="element" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2/tile19" instance=ExtResource("13_trceg")]
 layout_mode = 1
 
 [node name="tile20" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_2" instance=ExtResource("1_ig7tw")]
@@ -911,6 +897,21 @@ layout_mode = 2
 [node name="tile7" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="graph" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_5/tile7" instance=ExtResource("13_trceg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 80.0
+grow_horizontal = 1
+grow_vertical = 1
+producing_resource = ExtResource("19_gqmmt")
+
 [node name="tile8" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -1032,3 +1033,5 @@ layout_mode = 2
 
 [node name="tile45" parent="VBoxContainer/HBoxContainer/ColorRect2/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

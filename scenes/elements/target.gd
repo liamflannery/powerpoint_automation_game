@@ -1,20 +1,5 @@
 extends Element
 class_name Target
-@export var resource_counter : Label
-
-var target_resource : GameResource
-
-func _ready() -> void:
-	#target_resource = load("res://scenes/game resources/diamond.tscn").instantiate()
-	#add_child(target_resource)
-	#target_resource.pivot_offset = target_resource.size/2
-	#target_resource.scale *= 0.8
-	#target_resource.set_colour(Color("#006FC1"))
-	#target_resource.set_data("123")
-	#target_resource.set_type(load("res://assets/graph_icon.png"))
-	super()
-
-
 
 
 func activate_element():
@@ -26,6 +11,8 @@ func activate_element():
 		for resource in all_resources:
 			if !resource:
 				continue
+			if Stage.get_main().target and Stage.get_main().target.resource_equal_to(resource):
+				Stage.get_main().produced_resources += 1
 			all_resources.pop_back().queue_free()
 			processed_resources.erase(resource)
 			queued_resources.erase(resource)

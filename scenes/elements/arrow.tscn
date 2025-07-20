@@ -23,14 +23,11 @@ corner_texture_right_up = ExtResource("5_r1o5m")
 corner_texture_left_down = ExtResource("6_fyl8h")
 corner_texture_right_down = ExtResource("7_5k1id")
 texture_rect = NodePath("top_body")
-north_port = 1
-south_port = 1
-west_port = 1
+north_port = 2
+east_port = 2
+south_port = 2
+west_port = 2
 delete_button = NodePath("delete_button")
-north_facing_texture = ExtResource("1_vnigt")
-east_facing_texture = ExtResource("3_acd0x")
-south_facing_texture = ExtResource("1_vnigt")
-west_facing_texture = ExtResource("3_acd0x")
 
 [node name="delete_button" type="Button" parent="."]
 custom_minimum_size = Vector2(20, 20)

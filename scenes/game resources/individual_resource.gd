@@ -34,6 +34,8 @@ func _set_content(new_content : CONTENT_TYPE):
 			content_texture = load("res://assets/chart_icon.png")
 		CONTENT_TYPE.TITLE:
 			content_texture = load("res://assets/title_property_icon.png")
+		CONTENT_TYPE.QUOTE:
+			content_texture = load("res://assets/quote_icon.png")
 	var content_image : TextureRect = content_parent.get_child(content.size() - 1)	
 	content_image.show()
 	content_image.texture = content_texture	
@@ -65,4 +67,23 @@ func can_set_property(property : GameResource) -> bool:
 		
 
 func resource_equal_to(target_resource : GameResource) -> bool:
-	return target_resource.resource_colour == resource_colour 
+	var content_passed : bool = true
+	if !content_parent and !target_resource.content_parent:
+		content_passed = true
+	elif !content_parent:
+		return false
+	else:
+		for i in content_parent.get_children().size():
+			if !target_resource.content_parent:
+				content_passed = false
+				break
+			if content_parent.get_children()[i].texture != target_resource.content_parent.get_children()[i].texture:
+				content_passed = false
+	var colour_passed : bool = target_resource.resource_colour == resource_colour
+	var type_passed : bool = target_resource.this_type == this_type
+	var property_type_passed : bool = target_resource.property_type == property_type
+	var transition_type_passed : bool = target_resource.transition_type == transition_type
+	var content_type_passed : bool = target_resource.content_type == content_type
+	return content_passed and colour_passed and type_passed and property_type_passed and transition_type_passed and content_type_passed 
+	
+	

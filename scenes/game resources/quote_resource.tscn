@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://diu2gn0a5do18"]
+
+[ext_resource type="Texture2D" uid="uid://c8u137c801gbp" path="res://assets/quote_resource.png" id="1_m7vf2"]
+[ext_resource type="Script" uid="uid://xhs86oaxmxge" path="res://scenes/game resources/individual_resource.gd" id="2_6vy21"]
+
+[node name="title" type="TextureRect"]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_m7vf2")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_6vy21")
+this_type = 1
+property_type = 1
+content_type = 1

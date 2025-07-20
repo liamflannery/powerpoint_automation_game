@@ -23,6 +23,5 @@ func _pressed() -> void:
 		
 	disabled = false
 	if multi_place and !cancelled: 
-		
 		_pressed()
 	
