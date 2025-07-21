@@ -109,20 +109,12 @@ func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=fals
 	return sorted_tiles.front()
 	
 var counter = 0
-var reverse_counter = 0
+
 var highlighted_tiles : Array
 var direction : Element.DIRECTION 
-var reverse = false
 func _process(delta: float) -> void:
-	reverse_counter += delta
-	if reverse_counter >= 4:
-		reverse = !reverse
-		reverse_counter = 0
-		
 	for page in %PageParent.get_children():
 		var tiles = page.get_children()
-		if reverse:
-			tiles.reverse()
 		for tile in tiles:
 			for element in tile.elements:
 				element.tick_element()

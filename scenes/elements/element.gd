@@ -240,16 +240,34 @@ func tick_element():
 		for tile in send_to:
 			if tile and !tile.elements.is_empty(): 
 				for element in tile.elements:
-					if element.can_recieve_resource(self, processed_resources.back()) and !processed_resources.is_empty():
-						if element.resource_sending:
+					if !processed_resources.is_empty():
+						var direction_correct = false
+						for sending_dir in sending_directions:
+							if element.recieving_directions.has(get_opposite_direction(sending_dir)):
+								direction_correct = true
+						if !direction_correct:
 							continue
-						if !movement_tween or !movement_tween.is_running():
-							var sending_resource = processed_resources.back()
-							processed_resources.erase(sending_resource)
-							await element.send_resource(sending_resource, self)
+						request_send(self, processed_resources.back())
 		
+	if !recieving_queue.keys().is_empty():
+		for element : Element in recieving_queue.keys().duplicate():
+			var resource : GameResource = recieving_queue[element]
+			if !element.processed_resources.has(resource):
+				recieving_queue.erase(element)
+				continue
+			if !can_recieve_resource(element, resource):
+				continue
+			await send_resource(resource, element)
+	
+	
 	if _ready_to_activate():
 		await activate_element()
+
+var recieving_queue : Dictionary[Element, GameResource] = {}
+func request_send(from_tile : Element, with_resource : GameResource):
+	if recieving_queue.keys().has(from_tile):
+		return 
+	recieving_queue[from_tile] = with_resource
 
 
 func get_send_to() -> Array[Tile]:
