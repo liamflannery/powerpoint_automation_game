@@ -109,9 +109,25 @@ func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=fals
 	return sorted_tiles.front()
 	
 var counter = 0
+var reverse_counter = 0
 var highlighted_tiles : Array
 var direction : Element.DIRECTION 
+var reverse = false
 func _process(delta: float) -> void:
+	reverse_counter += delta
+	if reverse_counter >= 4:
+		reverse = !reverse
+		reverse_counter = 0
+		
+	for page in %PageParent.get_children():
+		var tiles = page.get_children()
+		if reverse:
+			tiles.reverse()
+		for tile in tiles:
+			for element in tile.elements:
+				element.tick_element()
+	
+	
 	if !arrow_placement_mode:
 		return
 	if Input.is_action_just_pressed("mouse_left"):
@@ -223,7 +239,7 @@ func drag_ended():
 			tile.set_element(load("res://scenes/elements/arrow.tscn"))
 		else:
 			var existing_arrow = tile.elements[0]
-			if existing_arrow.sending_directions.size() == 1 and existing_arrow.recieving_directions.size() == 1 and i > 0:
+			if existing_arrow.sending_directions.size() == 1 and existing_arrow.recieving_directions.size() == 1 and i > 0 and i != highlighted_tiles.size() - 1:
 				if (existing_arrow.sending_directions[0] + existing_arrow.recieving_directions[0]) % 2 == 0 and direction not in [existing_arrow.sending_directions[0]]:
 					tile.set_element(load("res://scenes/elements/arrow.tscn"))
 					

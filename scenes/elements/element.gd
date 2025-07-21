@@ -230,7 +230,7 @@ func activate_element():
 		processed_resources.append(queued_resources.pop_back())
 	element_activating = false
 	
-func _process(delta: float) -> void:
+func tick_element():
 
 	
 	if !processed_resources.is_empty():

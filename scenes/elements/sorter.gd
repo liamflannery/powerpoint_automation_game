@@ -19,7 +19,11 @@ func get_send_to() -> Array[Tile]:
 		return [adjacent_tiles[get_opposite_direction(recieving_directions[0])]]
 	else:
 		return [adjacent_tiles[get_clockwise_direction(get_opposite_direction(recieving_directions[0]))]]
-		
+
+func activate_element():
+	element_activating = true
+	await get_tree().create_timer(2).timeout
+	super()
 
 func _show_delete_button():
 	super()

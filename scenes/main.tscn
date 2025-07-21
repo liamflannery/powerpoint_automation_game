@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=24 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
 [ext_resource type="Script" uid="uid://c6e2qdprhr2ea" path="res://scenes/clear_all.gd" id="8_jscy8"]
+[ext_resource type="PackedScene" uid="uid://b5k1eqmjva61t" path="res://scenes/elements/bin.tscn" id="8_pm3ni"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://b2o788mtkau0k" path="res://assets/reciever.png" id="11_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/graph_producer.tscn" id="13_trceg"]
@@ -64,6 +65,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Add Page" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 text = "Add Page"
@@ -95,6 +97,13 @@ size_flags_vertical = 4
 text = "Sorter"
 script = ExtResource("2_tbgi4")
 element_scene = ExtResource("7_yc10j")
+
+[node name="Bin" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Bin"
+script = ExtResource("2_tbgi4")
+element_scene = ExtResource("8_pm3ni")
 
 [node name="ClearAll" type="Button" parent="VBoxContainer/TopPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
