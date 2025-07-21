@@ -72,7 +72,7 @@ func _show_delete_button():
 func _hide_delete_button():
 	if delete_button and !delete_button.get_global_rect().has_point(get_global_mouse_position()) and !get_global_rect().has_point(get_global_mouse_position()): delete_button.hide()
 func delete_element():
-	parent_tile.clear_element()
+	parent_tile.elements.erase(self)
 	for resource in queued_resources + processed_resources:
 		resource.queue_free()
 	queue_free()
@@ -149,11 +149,15 @@ func set_connectors():
 
 func element_connected() -> bool:
 	for sending_dir in sending_directions:
-		if adjacent_tiles[sending_dir] and adjacent_tiles[sending_dir].element and adjacent_tiles[sending_dir].element.recieving_directions.has(get_opposite_direction(sending_dir)):
-			return true
+		if adjacent_tiles[sending_dir] and !adjacent_tiles[sending_dir].elements.is_empty():
+			for element in adjacent_tiles[sending_dir].elements: 
+				if element.recieving_directions.has(get_opposite_direction(sending_dir)):
+					return true
 	for recieving_dir in sending_directions:
-		if adjacent_tiles[recieving_dir] and adjacent_tiles[recieving_dir].element and adjacent_tiles[recieving_dir].element.sending_directions.has(get_opposite_direction(recieving_dir)):
-			return true
+		if adjacent_tiles[recieving_dir] and !adjacent_tiles[recieving_dir].elements.is_empty():
+			for element in adjacent_tiles[recieving_dir].elements: 
+				if element.sending_directions.has(get_opposite_direction(recieving_dir)):
+					return true
 	return false
 
 func element_placed(on_tile : Tile):
@@ -209,13 +213,9 @@ func get_closest_tile_to_mouse() -> Tile:
 
 func place_on_tile(tile: Tile) -> void:
 	# Place the element on the specified tile
-	if tile and !tile.element:
-		tile.element = self
+	if tile and !tile.elements.has(self):
+		tile.elements.append(self)
 		element_placed(tile)
-	
-	for adj_tile in adjacent_tiles:
-		if adj_tile and adj_tile.element:
-			adj_tile.element.save_direction_state()
 		
 
 func is_mouse_over_element() -> bool:
@@ -238,16 +238,16 @@ func _process(delta: float) -> void:
 		
 		
 		for tile in send_to:
-			if tile and tile.element and tile.element.can_recieve_resource(self, processed_resources.back()) and !processed_resources.is_empty():
-				#if tile.element is not Arrow and self is not Arrow:
-					#continue
-				if tile.element.resource_sending:
-					continue
-				if !movement_tween or !movement_tween.is_running():
-					var sending_resource = processed_resources.back()
-					processed_resources.erase(sending_resource)
-					await tile.element.send_resource(sending_resource, self)
-	
+			if tile and !tile.elements.is_empty(): 
+				for element in tile.elements:
+					if element.can_recieve_resource(self, processed_resources.back()) and !processed_resources.is_empty():
+						if element.resource_sending:
+							continue
+						if !movement_tween or !movement_tween.is_running():
+							var sending_resource = processed_resources.back()
+							processed_resources.erase(sending_resource)
+							await element.send_resource(sending_resource, self)
+		
 	if _ready_to_activate():
 		await activate_element()
 
@@ -257,17 +257,26 @@ func get_send_to() -> Array[Tile]:
 	for facing_direction in sending_directions:
 			match facing_direction:
 				DIRECTION.NORTH:
-					if adjacent_tiles[0] and adjacent_tiles[0].element and DIRECTION.SOUTH in adjacent_tiles[0].element.recieving_directions:
-						send_to.append(adjacent_tiles[0])
+					if adjacent_tiles[0] and !adjacent_tiles[0].elements.is_empty():
+						for element in adjacent_tiles[0].elements: 
+							if DIRECTION.SOUTH in element.recieving_directions:
+								send_to.append(adjacent_tiles[0])
 				DIRECTION.EAST:
-					if adjacent_tiles[1] and adjacent_tiles[1].element and DIRECTION.WEST in adjacent_tiles[1].element.recieving_directions:
-						send_to.append(adjacent_tiles[1])
+					if adjacent_tiles[1] and !adjacent_tiles[1].elements.is_empty():
+						for element in adjacent_tiles[1].elements: 
+							if DIRECTION.WEST in element.recieving_directions:
+								send_to.append(adjacent_tiles[1])
 				DIRECTION.SOUTH:
-					if adjacent_tiles[2] and adjacent_tiles[2].element and DIRECTION.NORTH in adjacent_tiles[2].element.recieving_directions:
-						send_to.append(adjacent_tiles[2])
+					if adjacent_tiles[2] and !adjacent_tiles[2].elements.is_empty():
+						for element in adjacent_tiles[2].elements: 
+							if DIRECTION.NORTH in element.recieving_directions:
+								send_to.append(adjacent_tiles[2])
 				DIRECTION.WEST:
-					if adjacent_tiles[3] and adjacent_tiles[3].element and DIRECTION.EAST in adjacent_tiles[3].element.recieving_directions:
-						send_to.append(adjacent_tiles[3])
+					if adjacent_tiles[3] and !adjacent_tiles[3].elements.is_empty():
+						for element in adjacent_tiles[3].elements: 
+							if DIRECTION.EAST in element.recieving_directions:
+								send_to.append(adjacent_tiles[3])
+
 	return send_to
 
 

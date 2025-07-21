@@ -17,9 +17,7 @@ func _pressed() -> void:
 		await Stage.mouse_exited_tile
 	for tile : Tile in Stage.get_main().get_tiles():
 		tile.texture = load("res://assets/tile_no_outline.png")
-		if tile.element:
-			if !is_instance_valid(placed_element) or !placed_element.adjacent_tiles.has(tile): 
-				tile.element.reset_direction()
+
 		
 	disabled = false
 	if multi_place and !cancelled: 

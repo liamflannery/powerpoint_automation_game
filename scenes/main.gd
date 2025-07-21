@@ -104,7 +104,7 @@ func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=fals
 		
 	var sorted_tiles = tiles.duplicate()
 	if !include_full_tiles:
-		sorted_tiles = sorted_tiles.filter(func(tile): return !tile.element)
+		sorted_tiles = sorted_tiles.filter(func(tile): return tile.elements.is_empty())
 	sorted_tiles.sort_custom(func(a,b): return to_position.distance_to(a.global_position + a.size/2) < to_position.distance_to(b.global_position + b.size/2))
 	return sorted_tiles.front()
 	
@@ -212,13 +212,27 @@ func drag_ended():
 		return
 	for i in highlighted_tiles.size():
 		var tile : Tile = highlighted_tiles[i]
-		if tile.element and tile.element is not Arrow:
+		if !tile.elements.is_empty() and tile.elements[0] is not Arrow:
 			continue
-		if !tile.element:
+
+		var setting_arrow
+		if tile.elements.size() > 1:
+			var second_arrow : Arrow = tile.elements.back()
+			second_arrow.delete_element()
+		if tile.elements.is_empty():
 			tile.set_element(load("res://scenes/elements/arrow.tscn"))
-		var recieving = tile.element.recieving_directions
-		if i > 0: recieving.append(tile.element.get_opposite_direction(direction))
-		tile.element.set_direction([direction], recieving)
+		else:
+			var existing_arrow = tile.elements[0]
+			if existing_arrow.sending_directions.size() == 1 and existing_arrow.recieving_directions.size() == 1 and i > 0:
+				if (existing_arrow.sending_directions[0] + existing_arrow.recieving_directions[0]) % 2 == 0 and direction not in [existing_arrow.sending_directions[0]]:
+					tile.set_element(load("res://scenes/elements/arrow.tscn"))
+					
+		setting_arrow = tile.elements.back()
+		var recieving : Array[Element.DIRECTION] = setting_arrow.recieving_directions
+		var sending : Array[Element.DIRECTION] = [direction]
+		if i > 0: recieving.append(setting_arrow.get_opposite_direction(direction))
+		setting_arrow.set_direction(sending, recieving)
 	for tile in highlighted_tiles:
-		tile.element.set_direction()
+		for element in tile.elements:
+			element.set_direction()
 	

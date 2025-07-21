@@ -1,12 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://da0dk4s05yj4u"]
+[gd_scene load_steps=5 format=3 uid="uid://da0dk4s05yj4u"]
 
 [ext_resource type="Script" uid="uid://bv02x72lw86tp" path="res://scenes/elements/arrow.gd" id="1_pmcjm"]
 [ext_resource type="Texture2D" uid="uid://ivkfe8q8n2t2" path="res://assets/arrow_up_down.png" id="1_vnigt"]
-[ext_resource type="Texture2D" uid="uid://bvkatmubb5x0l" path="res://assets/arrow_left_right.png" id="3_acd0x"]
-[ext_resource type="Texture2D" uid="uid://4dnyyjepfmxy" path="res://assets/arrow_bend.png" id="3_tk65o"]
-[ext_resource type="Texture2D" uid="uid://bsmepqxada811" path="res://assets/arrow_bend_right_up.png" id="5_r1o5m"]
-[ext_resource type="Texture2D" uid="uid://d0lfmmjslnx11" path="res://assets/arrow_bend_left_down.png" id="6_fyl8h"]
-[ext_resource type="Texture2D" uid="uid://c7clgtwiwt36u" path="res://assets/arrow_bend_right_down.png" id="7_5k1id"]
+[ext_resource type="Texture2D" uid="uid://b5i8tx2gueajk" path="res://assets/arrow_bridge.png" id="4_tk65o"]
 [ext_resource type="Texture2D" uid="uid://ctc3d7sk6aqoi" path="res://assets/arrow_head.png" id="8_fyl8h"]
 
 [node name="arrow" type="TextureRect" node_paths=PackedStringArray("texture_rect", "delete_button")]
@@ -16,12 +12,6 @@ offset_bottom = 80.0
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_pmcjm")
-up_down_texture = ExtResource("1_vnigt")
-left_right_texture = ExtResource("3_acd0x")
-corner_texture_left_up = ExtResource("3_tk65o")
-corner_texture_right_up = ExtResource("5_r1o5m")
-corner_texture_left_down = ExtResource("6_fyl8h")
-corner_texture_right_down = ExtResource("7_5k1id")
 texture_rect = NodePath("top_body")
 north_port = 2
 east_port = 2
@@ -158,3 +148,28 @@ mouse_filter = 2
 texture = ExtResource("1_vnigt")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="bridge_left_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = -9.0
+offset_top = 26.0
+offset_right = 103.0
+offset_bottom = 50.0
+mouse_filter = 2
+texture = ExtResource("4_tk65o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="bridge_up_down" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 26.0
+offset_top = 112.0
+offset_right = 155.0
+offset_bottom = 136.0
+rotation = -1.5708
+mouse_filter = 2
+texture = ExtResource("4_tk65o")
+expand_mode = 1
+stretch_mode = 5
