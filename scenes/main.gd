@@ -160,9 +160,8 @@ func _process(delta: float) -> void:
 				direction = Element.DIRECTION.SOUTH
 			else:
 				direction = Element.DIRECTION.NORTH
-		counter += delta
-		if counter > 0.5:
-			print(num_tiles_across, " ", num_tiles_up)
+
+
 
 		var current_tile = drag_start_tile
 		highlighted_tiles = [drag_start_tile]

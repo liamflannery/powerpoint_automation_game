@@ -6,6 +6,7 @@ func _pressed() -> void:
 			for element in tile.elements:
 				if !element:
 					continue
+				element.recieving_queue.clear()
 				if element.movement_tween and element.movement_tween.is_running():
 					element.movement_tween.kill()
 				for resource in element.queued_resources + element.processed_resources:

@@ -72,9 +72,15 @@ func _show_delete_button():
 func _hide_delete_button():
 	if delete_button and !delete_button.get_global_rect().has_point(get_global_mouse_position()) and !get_global_rect().has_point(get_global_mouse_position()): delete_button.hide()
 func delete_element():
+	for adj in adjacent_tiles:
+		if !adj: continue
+		for element in adj.elements:
+			if element and element.recieving_queue.keys().has(self):
+				element.recieving_queue.erase(self)
 	parent_tile.elements.erase(self)
 	for resource in queued_resources + processed_resources:
 		resource.queue_free()
+	
 	queue_free()
 
 
@@ -247,22 +253,31 @@ func tick_element():
 								direction_correct = true
 						if !direction_correct:
 							continue
-						request_send(self, processed_resources.back())
+						if !element.resource_sending and !resource_sending:
+							element.request_send(self, processed_resources.back())
 		
-	if !recieving_queue.keys().is_empty():
-		for element : Element in recieving_queue.keys().duplicate():
+	if !recieving_queue.keys().is_empty() and !resource_sending:
+		var recieving_elements = recieving_queue.keys().duplicate()
+		recieving_elements.sort_custom(func(a,b): return a != previously_recieved_from)
+		for element : Element in recieving_elements:
 			var resource : GameResource = recieving_queue[element]
 			if !element.processed_resources.has(resource):
 				recieving_queue.erase(element)
 				continue
 			if !can_recieve_resource(element, resource):
 				continue
+			if resource_sending:
+				continue
+			previously_recieved_from = element
 			await send_resource(resource, element)
+			await get_tree().create_timer(0.1).timeout
+			element.processed_resources.erase(resource)
+			recieving_queue.erase(element)
 	
 	
 	if _ready_to_activate():
 		await activate_element()
-
+var previously_recieved_from
 var recieving_queue : Dictionary[Element, GameResource] = {}
 func request_send(from_tile : Element, with_resource : GameResource):
 	if recieving_queue.keys().has(from_tile):
@@ -306,6 +321,7 @@ var movement_tween : Tween
 var resource_sending : bool = false
 func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = true
+	print("sending from tile" + sending_element.parent_tile.name + " to " + parent_tile.name)
 	if movement_tween and movement_tween.is_running():
 		movement_tween.kill()
 	sent_resource.reparent(self)
