@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dlvgdo1xlkj0v" path="res://assets/plus_icon.png" id="12_7rwvo"]
 [ext_resource type="Texture2D" uid="uid://b1wdndmk7afe1" path="res://assets/slide_icon.png" id="12_athdt"]
 
-[node name="element" type="TextureRect" node_paths=PackedStringArray("texture_rect")]
+[node name="element" type="TextureRect" node_paths=PackedStringArray("resource_icon", "texture_rect")]
 custom_minimum_size = Vector2(80, 80)
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,6 +34,7 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_iludv")
 producing_resource = ExtResource("3_h4iiy")
+resource_icon = NodePath("resource_icon")
 texture_rect = NodePath(".")
 
 [node name="out_top" type="TextureRect" parent="."]

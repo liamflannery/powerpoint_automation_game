@@ -13,4 +13,5 @@ func _pressed() -> void:
 					resource.queue_free()
 				element.queued_resources.clear()
 				element.processed_resources.clear()
+				
 				element.resource_sending = false

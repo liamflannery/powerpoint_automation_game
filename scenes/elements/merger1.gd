@@ -5,7 +5,7 @@ func activate_element():
 	if queued_resources.size() < 2:
 		return
 	element_activating = true
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.1).timeout
 	var slide = queued_resources[queued_resources.find_custom(func(a): return a.this_type == GameResource.RESOURCE_TYPE.SLIDE)]
 	var property = queued_resources[queued_resources.find_custom(func(a): return a.this_type == GameResource.RESOURCE_TYPE.PROPERTY)]
 	slide.set_property(property)

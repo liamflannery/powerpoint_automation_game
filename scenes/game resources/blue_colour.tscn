@@ -22,4 +22,4 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_xon0b")
 this_type = 1
-resource_colour = Color(0.00392157, 0.435294, 0.756863, 1)
+resource_colour = 1

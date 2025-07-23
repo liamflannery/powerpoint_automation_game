@@ -17,10 +17,20 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 [autoload]
 
 Stage="*res://scenes/globals/stage.gd"
+SaveSystem="*res://addons/save_system/save_system.gd"
+SaveManager="*res://scenes/globals/save_manager.gd"
 
 [display]
 
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/save_system/plugin.cfg")
+
+[global_group]
+
+persist=""
 
 [gui]
 

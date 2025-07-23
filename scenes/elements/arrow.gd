@@ -90,7 +90,8 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 	
 
 
-		
+func tick_element():
+	super()
 	
 func can_change_sending_direction() -> bool:
 	return true

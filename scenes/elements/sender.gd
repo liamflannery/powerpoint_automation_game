@@ -5,12 +5,7 @@ enum MODE{PREVIOUS, NEXT}
 @export var to_page : MODE
 var parent_page : Page
 
-func _ready() -> void:
-	if to_page == MODE.NEXT:
-		west_port = PORT_STATUS.SENDING
-		east_port = PORT_STATUS.BLOCKED
-		north_port = PORT_STATUS.RECEIVING
-	super()
+
 
 func set_parent_page(this_page : Page):
 	if to_page == MODE.PREVIOUS:
@@ -39,10 +34,22 @@ func can_recieve_resource(sending_element : Element, sending_resource : GameReso
 
 func get_send_to() -> Array[Tile]:
 	var normal_send_to : Array[Tile] = super()
-	if to_page == MODE.PREVIOUS:
+	if to_page == MODE.PREVIOUS and !recieving_directions.is_empty():
 		if parent_page.get_previous_page():
-			normal_send_to.append_array([parent_page.get_previous_page().next_page_sender.parent_tile])
-	if to_page == MODE.NEXT:
+			normal_send_to.append_array([parent_page.get_previous_page().next_page_reciever.parent_tile])
+	if to_page == MODE.NEXT and !recieving_directions.is_empty():
 		if parent_page.get_next_page():
-			normal_send_to.append_array([parent_page.get_next_page().previous_page_sender.parent_tile])
+			normal_send_to.append_array([parent_page.get_next_page().previous_page_reciever.parent_tile])
 	return normal_send_to
+
+
+func get_save_dict() -> Dictionary:
+	var save_dict = super()
+	save_dict["to_page"] = to_page
+	return save_dict
+func load_from_save_dict(dict : Dictionary):
+	if dict.has("to_page"):
+		to_page = int(dict["to_page"])
+		_ready()
+		set_parent_page(Stage.get_main().get_page(parent_tile))
+	super(dict)

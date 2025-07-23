@@ -16,6 +16,7 @@ func _ready() -> void:
 		if child is Element:
 			elements.append(child)
 			child.element_placed(self)
+			child.set_direction()
 	if starting_element:
 		set_element(starting_element)
 	
@@ -40,10 +41,17 @@ func highlight_tile():
 func reset_tile():
 	self.texture = original_texture
 	
-#var timer : float
-#func _process(delta: float) -> void:
-	#timer += delta + randf() * 0.001
-	#if timer >= 1:
-		#timer = 0
-		#if element:
-			#element.activate_element()
+func save():
+	var elements_dict : Dictionary
+	for element in elements:
+		elements_dict[element.get_index()] = [element.scene_file_path, element.get_save_dict()]
+	SaveSystem.set_var(name+"/"+Stage.get_main().get_page(self).name, elements_dict)
+func load_node():
+	clear_element()
+	if SaveSystem.has(name+"/"+Stage.get_main().get_page(self).name):
+		var dict = SaveSystem.get_var(name+"/"+Stage.get_main().get_page(self).name)
+		for key in dict.keys():
+			set_element(load(dict[key][0]))
+			elements.back().load_from_save_dict(dict[key][1])
+			
+		

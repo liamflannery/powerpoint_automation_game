@@ -2,11 +2,16 @@ extends Control
 class_name Main
 
 var page_tiles : Array[Array]
-var arrow_placement_mode := false
+var arrow_placement_mode := false :
+	set(value):
+		arrow_placement_mode = value
+		if !arrow_placement_mode: %ArrowButton.release_focus()
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
-		%produced_label.text = str(value)
+		%produced_label.text = str(value) + "/" + str(target_resources)
+		if produced_resources >= target_resources:
+			go_to_next_target()
 func _ready() -> void:
 	for child in %PageParent.get_children():
 		var tiles : Array[Tile]
@@ -15,32 +20,9 @@ func _ready() -> void:
 			tile.texture = load("res://assets/tile_no_outline.png")
 		page_tiles.append(tiles)
 	Stage.register_main(self)
-	target = load("res://scenes/game resources/slide_group.tscn").instantiate()
-	var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
-	var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
-	var slide_3 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
-
-	add_child(slide_1)
-	add_child(slide_2)
-	add_child(slide_3)
-	slide_1._set_content(IndividualResource.CONTENT_TYPE.TITLE)
-	slide_1._set_colour(Color("016fc1"))
-	slide_2._set_content(IndividualResource.CONTENT_TYPE.QUOTE)
-	slide_3._set_content(IndividualResource.CONTENT_TYPE.GRAPH)
-	slide_3._set_content(IndividualResource.CONTENT_TYPE.NUMBER)
-	slide_3._set_colour(Color("#C10088"))
-	
-	target.slides_parent.add_theme_constant_override("separation", 10)
-	target.add_resource(slide_1)
-	target.add_resource(load("res://scenes/game resources/star_wipe.tscn").instantiate())
-	target.add_resource(slide_2)
-	target.add_resource(load("res://scenes/game resources/fade.tscn").instantiate())
-	target.add_resource(slide_3)
-	
-	target.z_as_relative = true
-	target.z_index = 0
-	%target2.add_child(target)
-	target.position = %target2.position + %target2.size/2 - target.size/2
+	await get_tree().create_timer(0.1).timeout
+	level = 1
+	set_target(level)
 	
 	
 
@@ -194,7 +176,7 @@ func _process(delta: float) -> void:
 				tile.reset_tile()
 
 
-var target : SlideGroup
+var target : GameResource
 
 func get_target() -> GameResource:
 	return target
@@ -211,6 +193,7 @@ func drag_cancelled():
 	for tile in get_tiles():
 		tile.reset_tile()
 	highlighted_tiles.clear()
+	#arrow_placement_mode = false
 func drag_ended():
 	is_dragging = false
 	for tile in get_tiles():
@@ -243,3 +226,108 @@ func drag_ended():
 		for element in tile.elements:
 			element.set_direction()
 	
+	arrow_placement_mode = false
+	
+var level = 1 : 
+	set(value):
+		level = value
+		%level_text.text = "Level: " + str(level)
+var target_resources 
+func go_to_next_target():
+	level += 1
+	produced_resources = 0
+	set_target(level)
+
+func set_target(level : int):
+	if target: target.queue_free()
+	match level:
+		1:
+			target_resources = 10
+			target = load("res://scenes/game resources/slide.tscn").instantiate()
+			%target2.add_child(target)
+		2: 
+			target_resources = 20
+			target = load("res://scenes/game resources/slide.tscn").instantiate()
+			%target2.add_child(target)
+			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
+		3: 
+			target_resources = 50
+			target = load("res://scenes/game resources/slide.tscn").instantiate()
+			%target2.add_child(target)
+			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
+			target._set_colour(IndividualResource.RESOURCE_COLOUR.BLUE)
+		4:
+			target_resources = 50
+			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
+			%target2.add_child(target)
+			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			
+
+			add_child(slide_1)
+			add_child(slide_2)
+
+			slide_1._set_content(IndividualResource.CONTENT_TYPE.TITLE)
+			slide_1._set_colour(IndividualResource.RESOURCE_COLOUR.BLUE)
+			slide_2._set_content(IndividualResource.CONTENT_TYPE.QUOTE)
+
+			
+			target.slides_parent.add_theme_constant_override("separation", 10)
+			target.add_resource(slide_1)
+			target.add_resource(load("res://scenes/game resources/star_wipe.tscn").instantiate())
+			target.add_resource(slide_2)
+		5:
+			target_resources = 50
+			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
+			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			var slide_3 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			%target2.add_child(target)
+			add_child(slide_1)
+			add_child(slide_2)
+			add_child(slide_3)
+			slide_1._set_content(IndividualResource.CONTENT_TYPE.TITLE)
+			slide_1._set_colour(IndividualResource.RESOURCE_COLOUR.BLUE)
+			slide_2._set_content(IndividualResource.CONTENT_TYPE.QUOTE)
+			slide_3._set_content(IndividualResource.CONTENT_TYPE.GRAPH)
+			slide_3._set_content(IndividualResource.CONTENT_TYPE.NUMBER)
+			slide_3._set_colour(IndividualResource.RESOURCE_COLOUR.PINK)
+			
+			target.slides_parent.add_theme_constant_override("separation", 10)
+			target.add_resource(slide_1)
+			target.add_resource(load("res://scenes/game resources/star_wipe.tscn").instantiate())
+			target.add_resource(slide_2)
+			target.add_resource(load("res://scenes/game resources/fade.tscn").instantiate())
+			target.add_resource(slide_3)
+		_:
+			target_resources = 1000
+			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
+			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			var slide_3 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
+			%target2.add_child(target)
+			add_child(slide_1)
+			add_child(slide_2)
+			add_child(slide_3)
+			slide_1._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_1._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_1._set_colour([IndividualResource.RESOURCE_COLOUR.BLUE, IndividualResource.RESOURCE_COLOUR.PINK].pick_random())
+			slide_2._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_2._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_2._set_colour([IndividualResource.RESOURCE_COLOUR.BLUE, IndividualResource.RESOURCE_COLOUR.PINK].pick_random())
+			slide_3._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_3._set_content(IndividualResource.CONTENT_TYPE.values().pick_random())
+			slide_3._set_colour([IndividualResource.RESOURCE_COLOUR.BLUE, IndividualResource.RESOURCE_COLOUR.PINK].pick_random())
+
+			
+			target.slides_parent.add_theme_constant_override("separation", 10)
+			target.add_resource(slide_1)
+			target.add_resource(load(["res://scenes/game resources/star_wipe.tscn", "res://scenes/game resources/fade.tscn"].pick_random()).instantiate())
+			target.add_resource(slide_2)
+			target.add_resource(load(["res://scenes/game resources/star_wipe.tscn", "res://scenes/game resources/fade.tscn"].pick_random()).instantiate())
+			target.add_resource(slide_3)
+	target.z_as_relative = true
+	target.z_index = 0
+	produced_resources = 0
+	
+	target.position = %target2.position + %target2.size/2 - target.size/2

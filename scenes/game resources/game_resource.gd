@@ -21,3 +21,8 @@ func can_set_property(property : GameResource) -> bool:
 
 func resource_equal_to(target_resource : GameResource) -> bool:
 	return false
+
+func get_save_dict() -> Dictionary:
+	return {}
+func load_from_save_dict(dict : Dictionary):
+	pass

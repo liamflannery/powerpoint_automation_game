@@ -4,7 +4,7 @@ signal placed(cancelled:bool, element : Element)
 @export var max_queued_resources : int = 1
 @export var max_processed_resources : int = 1
 var queued_resources : Array[GameResource]
-var processed_resources : Array[GameResource]
+var processed_resources : Array[GameResource] 
 enum DIRECTION{
 	NORTH,
 	EAST,
@@ -116,6 +116,11 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 		in_recieving_directions = recieving_directions
 	recieving_directions = in_recieving_directions
 	sending_directions = in_sending_directions
+	if !adjacent_tiles.is_empty():
+		for dir in sending_directions.duplicate():
+			if !adjacent_tiles[dir]: sending_directions.erase(dir)
+		for dir in recieving_directions.duplicate():
+			if !adjacent_tiles[dir]: recieving_directions.erase(dir)
 	set_connectors()
 	if in_sending_directions.is_empty() or !texture_rect:
 		return
@@ -177,7 +182,8 @@ func element_placed(on_tile : Tile):
 
 	
 	placed.emit(false, self)
-
+	set_direction()
+	
 func clear_placement_mode():
 	placed.emit(true, self)
 	placement_mode = false
@@ -220,7 +226,10 @@ func get_closest_tile_to_mouse() -> Tile:
 func place_on_tile(tile: Tile) -> void:
 	# Place the element on the specified tile
 	if tile and !tile.elements.has(self):
-		tile.elements.append(self)
+		if self is Arrow: tile.elements.append(self)
+		else: 
+			tile.clear_element()
+			tile.elements.append(self)
 		element_placed(tile)
 		
 
@@ -235,32 +244,66 @@ func activate_element():
 	if !queued_resources.is_empty():
 		processed_resources.append(queued_resources.pop_back())
 	element_activating = false
-	
+var previously_sent : Array[Tile]
 func tick_element():
 
+
 	
-	if !processed_resources.is_empty():
+	if !processed_resources.is_empty() and !element_activating:
+		if self is Producer and self.producing_resource == load("res://scenes/game resources/slide.tscn"):
+			pass
 		var send_to : Array[Tile] = get_send_to()
-		
+		if previously_sent.size() >= 4:
+			previously_sent.clear()
+		if previously_sent:
+			send_to.sort_custom(func(a,b): 
+				if !previously_sent.has(a):
+					return true
+				if !previously_sent.has(b):
+					return false
+				return previously_sent.find(a) < previously_sent.find(b)
+				)
+		processed_resources = processed_resources.filter(func(resource): return is_instance_valid(resource))
+		if processed_resources.is_empty():
+			return
 		
 		for tile in send_to:
 			if tile and !tile.elements.is_empty(): 
 				for element in tile.elements:
 					if !processed_resources.is_empty():
 						var direction_correct = false
+						if self is Sender: direction_correct = true
 						for sending_dir in sending_directions:
 							if element.recieving_directions.has(get_opposite_direction(sending_dir)):
 								direction_correct = true
 						if !direction_correct:
 							continue
+						
 						if !element.resource_sending and !resource_sending:
 							element.request_send(self, processed_resources.back())
+							await get_tree().create_timer(0.1).timeout
 		
-	if !recieving_queue.keys().is_empty() and !resource_sending:
+
+	
+	if !recieving_queue.keys().is_empty() and !resource_sending and !element_activating:
 		var recieving_elements = recieving_queue.keys().duplicate()
-		recieving_elements.sort_custom(func(a,b): return a != previously_recieved_from)
+		if previously_recieved_from.size() >= 4: previously_recieved_from.clear()
+		recieving_elements.sort_custom(func(a,b): 
+			if !previously_recieved_from.has(a):
+				return true
+			if !previously_recieved_from.has(b):
+				return false
+			return previously_recieved_from.find(a) < previously_recieved_from.find(b)
+			)
 		for element : Element in recieving_elements:
+			if !recieving_queue.keys().has(element):
+				continue
 			var resource : GameResource = recieving_queue[element]
+			if !resource:
+				continue
+			if resource.get_parent() != element:
+				recieving_queue.erase(element)
+				continue
 			if !element.processed_resources.has(resource):
 				recieving_queue.erase(element)
 				continue
@@ -268,16 +311,21 @@ func tick_element():
 				continue
 			if resource_sending:
 				continue
-			previously_recieved_from = element
+			if !previously_recieved_from.has(element):
+				previously_recieved_from.append(element)
+			else:
+				previously_recieved_from.erase(element)
+				previously_recieved_from.append(element)
 			await send_resource(resource, element)
 			await get_tree().create_timer(0.1).timeout
-			element.processed_resources.erase(resource)
-			recieving_queue.erase(element)
-	
+			if is_instance_valid(element):
+				element.processed_resources.erase(resource)
+				recieving_queue.erase(element)
 	
 	if _ready_to_activate():
-		await activate_element()
-var previously_recieved_from
+		await activate_element()	
+
+var previously_recieved_from : Array[Element]
 var recieving_queue : Dictionary[Element, GameResource] = {}
 func request_send(from_tile : Element, with_resource : GameResource):
 	if recieving_queue.keys().has(from_tile):
@@ -321,13 +369,18 @@ var movement_tween : Tween
 var resource_sending : bool = false
 func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = true
-	print("sending from tile" + sending_element.parent_tile.name + " to " + parent_tile.name)
 	if movement_tween and movement_tween.is_running():
 		movement_tween.kill()
+	if !sending_element.previously_sent.has(parent_tile): 
+		sending_element.previously_sent.append(parent_tile)
+	else:
+		sending_element.previously_sent.erase(parent_tile)
+		sending_element.previously_sent.append(parent_tile)
 	sent_resource.reparent(self)
 	movement_tween = create_tween()
 	movement_tween.tween_property(sent_resource, "global_position", global_position + size/2 - sent_resource.size/2, 0.3)
 	queued_resources.append(sent_resource)
+	sending_element.processed_resources.erase(sent_resource)
 	await movement_tween.finished
 	resource_sending = false
 
@@ -371,4 +424,18 @@ func get_clockwise_direction(from_direction : DIRECTION) -> DIRECTION:
 			return DIRECTION.NORTH
 		_:
 			return 0
-			
+
+func get_save_dict() -> Dictionary:
+	var save_dict = {}
+	save_dict["sending_directions"] = sending_directions
+	save_dict["recieving_directions"] = recieving_directions
+	return save_dict
+func load_from_save_dict(dict : Dictionary):
+	if dict.has("sending_directions") and dict.has("recieving_directions"):
+		sending_directions.clear()
+		recieving_directions.clear()
+		for i in dict["sending_directions"]:
+			sending_directions.append(int(i))
+		for i in dict["recieving_directions"]:
+			recieving_directions.append(int(i))
+		set_direction()

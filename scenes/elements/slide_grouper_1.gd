@@ -5,7 +5,7 @@ func activate_element():
 	if queued_resources.size() < 3:
 		return
 	element_activating = true
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.1).timeout
 	var transition = queued_resources.pop_at(queued_resources.find_custom(func(a): return a is IndividualResource and a.this_type == GameResource.RESOURCE_TYPE.TRANSITION))
 	var other_elements = queued_resources
 	var new_group : SlideGroup = load("res://scenes/game resources/slide_group.tscn").instantiate()

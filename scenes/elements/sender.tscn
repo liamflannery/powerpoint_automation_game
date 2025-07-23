@@ -29,7 +29,8 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_ynqw8")
 texture_rect = NodePath(".")
-east_port = 1
+north_port = 2
+east_port = 2
 south_port = 2
 west_port = 2
 

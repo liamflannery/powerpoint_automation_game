@@ -3,7 +3,7 @@ class_name TypeSetter
 @export var type_image : Texture
 func activate_element():
 	element_activating = true
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.1).timeout
 	if !queued_resources.is_empty(): queued_resources.back().set_type(type_image)
 	super()
 
