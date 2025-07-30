@@ -2,6 +2,9 @@ extends Button
 
 @export var element_scene : PackedScene
 @export var multi_place := false
+func _ready() -> void:
+	tooltip_text = element_scene.instantiate().tooltip_text
+
 func _pressed() -> void:
 	if !element_scene:
 		return
@@ -23,3 +26,5 @@ func _pressed() -> void:
 	if multi_place and !cancelled: 
 		_pressed()
 	
+func _process(delta: float) -> void:
+	disabled = Stage.get_main().arrow_placement_mode

@@ -1,0 +1,153 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvd1kgxap60fm"]
+
+[ext_resource type="Texture2D" uid="uid://c502w3kxs46po" path="res://assets/pointer.png" id="1_ivlhb"]
+[ext_resource type="Script" uid="uid://pynx2sjj8q41" path="res://scenes/elements/pointer.gd" id="2_ivlhb"]
+[ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_cyta7"]
+[ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_6ykw0"]
+[ext_resource type="Texture2D" uid="uid://cev7rgbpe45rw" path="res://assets/connector_out_right.png" id="5_67x1g"]
+[ext_resource type="Texture2D" uid="uid://xxaogvi436si" path="res://assets/connector_out_left.png" id="6_mvxjg"]
+[ext_resource type="Texture2D" uid="uid://qscdh7fqb6fr" path="res://assets/connector_in_top.png" id="7_xvjg7"]
+[ext_resource type="Texture2D" uid="uid://dduu3uamn8c6i" path="res://assets/connector_in_bottom.png" id="8_pag7s"]
+[ext_resource type="Texture2D" uid="uid://00u7w0e4qk7" path="res://assets/connector_in_right.png" id="9_dvr18"]
+[ext_resource type="Texture2D" uid="uid://chaiohvwmfrh2" path="res://assets/connector_in_left.png" id="10_0db4s"]
+
+[node name="pointer" type="TextureRect" node_paths=PackedStringArray("delete_button")]
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ivlhb")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_ivlhb")
+south_port = 1
+west_port = 1
+delete_button = NodePath("delete_button")
+
+[node name="delete_button" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.5
+offset_right = 12.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"ExitButton"
+
+[node name="out_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("3_cyta7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("4_6ykw0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("5_67x1g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="out_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("6_mvxjg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_top" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -7.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("7_xvjg7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_bottom" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 83.0
+grow_horizontal = 2
+texture = ExtResource("8_pag7s")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_right" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = 5.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("9_dvr18")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="in_left" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -5.0
+offset_top = 17.0
+offset_right = -72.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("10_0db4s")
+expand_mode = 1
+stretch_mode = 5

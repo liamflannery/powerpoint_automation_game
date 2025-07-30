@@ -154,10 +154,10 @@ stretch_mode = 5
 
 [node name="plus_icon" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 14.0
-offset_right = 33.0
-offset_bottom = 37.0
+offset_left = 6.0
+offset_top = 16.0
+offset_right = 29.0
+offset_bottom = 39.0
 texture = ExtResource("12_7rwvo")
 expand_mode = 1
 stretch_mode = 5

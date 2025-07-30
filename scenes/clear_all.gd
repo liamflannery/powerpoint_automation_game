@@ -10,7 +10,7 @@ func _pressed() -> void:
 				if element.movement_tween and element.movement_tween.is_running():
 					element.movement_tween.kill()
 				for resource in element.queued_resources + element.processed_resources:
-					resource.queue_free()
+					if is_instance_valid(resource): resource.queue_free()
 				element.queued_resources.clear()
 				element.processed_resources.clear()
 				

@@ -1,0 +1,201 @@
+[gd_scene load_steps=4 format=3 uid="uid://e4yi7ab8ratq"]
+
+[ext_resource type="Script" uid="uid://cgilynxu77jvc" path="res://scenes/open_email.gd" id="1_nvf57"]
+
+[sub_resource type="Gradient" id="Gradient_og1vs"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0.501961, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2wyq8"]
+gradient = SubResource("Gradient_og1vs")
+
+[node name="open_email" type="PanelContainer" node_paths=PackedStringArray("subject_line", "from", "time", "to", "accept_button", "reject_button", "intro", "level_box", "sign_off", "top_bar_button") groups=["window"]]
+z_index = 5
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -281.401
+offset_top = -222.5
+offset_right = 281.401
+offset_bottom = 222.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"ToolBar"
+script = ExtResource("1_nvf57")
+subject_line = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/subject_line")
+from = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/from")
+time = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/time")
+to = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/to")
+accept_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer2/Button")
+reject_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer2/Button2")
+intro = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label")
+level_box = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/level_box")
+sign_off = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label2")
+top_bar_button = NodePath("VBoxContainer/top_bar/Button2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="top_bar" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture1D_2wyq8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/top_bar"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -8.5
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/top_bar/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Welcome"
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="VBoxContainer/top_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"InvisibleButton"
+
+[node name="quit_button" type="Button" parent="VBoxContainer/top_bar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -23.5381
+offset_top = -11.5
+offset_right = -2.53815
+offset_bottom = 9.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_type_variation = &"ExitButton"
+
+[node name="HBoxContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"ToolBar"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "From:"
+
+[node name="Sent" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sent:"
+
+[node name="Sent2" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "To:"
+
+[node name="Sent3" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Subject:"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="from" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Liam Flannery"
+
+[node name="time" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "10:35am"
+
+[node name="to" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "You"
+
+[node name="subject_line" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Welcome"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_type_variation = &"Sheet"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Whats up, please make this:"
+
+[node name="level_box" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Label3" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Your reward:"
+
+[node name="Label2" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cheers,
+Liam"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Accept"
+
+[node name="Button2" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Deny"
+
+[connection signal="pressed" from="VBoxContainer/top_bar/quit_button" to="." method="_on_quit_button_pressed"]

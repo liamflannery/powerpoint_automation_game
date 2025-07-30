@@ -10,13 +10,13 @@ func _ready() -> void:
 func hide_all_pages():
 	for child in %PageParent.get_children():
 		child.hide()
-	for preview : PanelContainer in %PreviewsParent.get_children():
-		preview.theme_type_variation = "Sheet"
+	for preview : TextureRect in %PreviewsParent.get_children():
+		preview.texture = load("res://assets/slide_icon_side.png")
 	
 func show_child(index = 0):
 	if %PageParent.get_child_count() - 1 < index:
 		return
 	hide_all_pages()
 	%PageParent.get_child(index).show()
-	%PreviewsParent.get_child(index).theme_type_variation = "SheetHighlighted"
+	%PreviewsParent.get_child(index).texture = load("res://assets/slide_icon_side_highlighted.png")
 	

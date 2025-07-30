@@ -24,9 +24,9 @@ func _set_colour(this_colour : RESOURCE_COLOUR):
 	resource_colour = this_colour
 	match this_colour:
 		RESOURCE_COLOUR.BLUE:
-			self_modulate = Color("016fc1")
+			self_modulate = Color("#64BDF0")
 		RESOURCE_COLOUR.PINK:
-			self_modulate = Color("#C10088")
+			self_modulate = Color("#F0A8F0")
 
 
 func _set_content(new_content : CONTENT_TYPE):
@@ -77,7 +77,7 @@ func resource_equal_to(target_resource : GameResource) -> bool:
 	var content_passed : bool = true
 	if !content_parent and !target_resource.content_parent:
 		content_passed = true
-	elif !content_parent:
+	elif !content_parent or !target_resource.content_parent:
 		return false
 	else:
 		if content_parent.get_children().size() != target_resource.content_parent.get_children().size():

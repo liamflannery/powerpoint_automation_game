@@ -24,6 +24,8 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+tooltip_text = "Grouper:
+Takes in two slides/slide groups and a transition and creates a slide group"
 texture = ExtResource("1_0jbn8")
 expand_mode = 1
 stretch_mode = 5
@@ -41,11 +43,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -24.0
-offset_bottom = 25.0
+offset_left = -20.0
+offset_bottom = 20.0
 grow_horizontal = 0
 theme_type_variation = &"ExitButton"
-text = "X"
 
 [node name="out_top" type="TextureRect" parent="."]
 unique_name_in_owner = true
