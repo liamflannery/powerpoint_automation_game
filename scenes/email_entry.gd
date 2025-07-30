@@ -6,6 +6,7 @@ class_name EmailEntry
 @export var subject_line : Label
 @export var sent_time : Label
 @export var open_close_icon : TextureRect
+signal mail_opened
 var selected : bool = false
 func _ready() -> void:
 	this_button.pressed.connect(email_selected)
@@ -52,11 +53,15 @@ func _input(event: InputEvent) -> void:
 		open_email()
 
 var expanded_email : OpenEmail
+var opened : bool = false
 func open_email():
 	if expanded_email:
 		expanded_email.show()
 		expanded_email.move_to_front()
 		return
+	opened = true
+	open_close_icon.texture = load("res://assets/email_open.png")
+	mail_opened.emit()
 	expanded_email = load("res://scenes/open_email.tscn").instantiate()
 	Stage.get_main().add_child(expanded_email)
 	expanded_email.set_content(this_content)

@@ -8,7 +8,7 @@ func _ready() -> void:
 		top_bar_button.button_up.connect(ended_hold)
 	if tool_bar_button:
 		tool_bar_button.button_pressed = visible
-	tool_bar_button.toggled.connect(toggle_window)
+		tool_bar_button.toggled.connect(toggle_window)
 var held : bool = false
 var offset : Vector2
 func started_hold():

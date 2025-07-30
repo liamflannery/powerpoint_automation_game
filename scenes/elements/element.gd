@@ -195,8 +195,8 @@ func _input(event: InputEvent) -> void:
 	# Check if we're in placement mode (you'll need to define this condition based on your game state)
 	if !Stage.get_main():
 		return
-	if !Stage.get_main().is_window_focused(self):
-		return
+	#if !Stage.get_main().is_window_focused(self):
+		#return
 	if is_in_placement_mode():
 		# Snap to closest tile to mouse position
 		if Input.is_action_just_pressed("ui_cancel"):
@@ -322,7 +322,7 @@ func tick_element():
 			await get_tree().create_timer(0.1).timeout
 			if is_instance_valid(element):
 				element.processed_resources.erase(resource)
-				recieving_queue.erase(element)
+				if recieving_queue and !recieving_queue.is_empty(): recieving_queue.erase(element)
 	
 	if _ready_to_activate():
 		await activate_element()	

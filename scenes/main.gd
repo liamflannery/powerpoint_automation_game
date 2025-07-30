@@ -10,6 +10,10 @@ var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
 		%produced_label.text = "Produced: \n" + str(value) + "/" + str(target_resources)
+		if produced_resources >= target_resources:
+			target = null
+			if current_contract:
+				create_email(current_contract.difficulty_level + 1)
 
 func _ready() -> void:
 	for child in %PageParent.get_children():
@@ -19,11 +23,37 @@ func _ready() -> void:
 			tile.texture = load("res://assets/tile_no_outline.png")
 		page_tiles.append(tiles)
 	Stage.register_main(self)
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(2).timeout
 	create_email(1)
 
-func create_email(level : int):
-	var email = Email.new("First task", "Liam Flannery", level, %time.get_time())
+var current_contract : Email
+var funny_subject_lines = [
+	"no subject",
+	"RE: please send me a harder challenge",
+	"FW: can you send this to that dumbass that makes slides",
+	"struggle to make slides with this ONE WEIRD TRICK",
+	"hot slides in your area",
+	"CONGRATULATIONS you've won another slide challenge",
+	
+]
+func create_email(this_level : int):
+	var subject 
+	match this_level:
+		1:
+			subject = "First task"
+		2: 
+			subject = "Second task"
+		3:
+			subject = "Damn okay see if you can do this"
+		4:
+			subject = "I've cooked on this one"
+		5:
+			subject = "The brain destroyer"
+		_:
+			subject = funny_subject_lines.pop_at(randi_range(0, funny_subject_lines.size() -1))
+			if !subject or subject == "":
+				subject = "Ive run out of subject line ideas"
+	var email = Email.new(subject, "Liam Flannery", this_level, %time.get_time())
 	%email_inbox.recieve_email(email)
 	
 	
@@ -250,7 +280,7 @@ var level = 1 :
 	set(value):
 		level = value
 		%level_text.text = "Level " + str(level) + ", produce the following:"
-var target_resources 
+var target_resources = 20
 
 
 
@@ -270,19 +300,19 @@ func get_target(level : int) -> GameResource:
 	var target : GameResource
 	match level:
 		1:
-			target_resources = 10
+
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
 		2: 
-			target_resources = 20
+	
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
 			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
 		3: 
-			target_resources = 50
+
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
 			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
 			target._set_colour(IndividualResource.RESOURCE_COLOUR.BLUE)
 		4:
-			target_resources = 50
+		
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
@@ -301,7 +331,7 @@ func get_target(level : int) -> GameResource:
 			target.add_resource(load("res://scenes/game resources/star_wipe.tscn").instantiate())
 			target.add_resource(slide_2)
 		5:
-			target_resources = 50
+
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
@@ -323,7 +353,7 @@ func get_target(level : int) -> GameResource:
 			target.add_resource(load("res://scenes/game resources/fade.tscn").instantiate())
 			target.add_resource(slide_3)
 		_:
-			target_resources = 1000
+	
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()

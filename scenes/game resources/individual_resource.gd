@@ -16,9 +16,9 @@ var content : Array[CONTENT_TYPE]
 func _ready() -> void:
 	z_as_relative = false
 	z_index = 1
-	if content_parent:
-		for child in content_parent.get_children():
-			child.hide()
+	#if content_parent:
+		#for child in content_parent.get_children():
+			#child.hide()
 
 func _set_colour(this_colour : RESOURCE_COLOUR):
 	resource_colour = this_colour
