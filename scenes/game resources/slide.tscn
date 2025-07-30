@@ -43,6 +43,7 @@ grow_vertical = 2
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="content"]
+visible = false
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("3_nyqx6")
@@ -50,6 +51,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="content"]
+visible = false
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 texture = ExtResource("4_vwgtw")

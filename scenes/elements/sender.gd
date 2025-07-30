@@ -4,7 +4,7 @@ class_name Sender
 enum MODE{PREVIOUS, NEXT}
 @export var to_page : MODE
 var parent_page : Page
-
+@export var tile_text : Label
 
 
 func set_parent_page(this_page : Page):

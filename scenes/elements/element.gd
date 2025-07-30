@@ -41,7 +41,7 @@ func _ready() -> void:
 	_initialise_ports()
 	if self is not Arrow:
 		z_as_relative = false
-		z_index = 4
+		z_index = 1
 
 func _initialise_ports():
 	sending_directions.clear()
@@ -193,6 +193,10 @@ func clear_placement_mode():
 var closest_tile : Tile
 func _input(event: InputEvent) -> void:
 	# Check if we're in placement mode (you'll need to define this condition based on your game state)
+	if !Stage.get_main():
+		return
+	#if !Stage.get_main().is_window_focused(self):
+		#return
 	if is_in_placement_mode():
 		# Snap to closest tile to mouse position
 		if Input.is_action_just_pressed("ui_cancel"):
@@ -246,9 +250,6 @@ func activate_element():
 	element_activating = false
 var previously_sent : Array[Tile]
 func tick_element():
-
-
-	
 	if !processed_resources.is_empty() and !element_activating:
 		if self is Producer and self.producing_resource == load("res://scenes/game resources/slide.tscn"):
 			pass
@@ -272,7 +273,8 @@ func tick_element():
 				for element in tile.elements:
 					if !processed_resources.is_empty():
 						var direction_correct = false
-						if self is Sender: direction_correct = true
+						if self is Sender: 
+							direction_correct = true
 						for sending_dir in sending_directions:
 							if element.recieving_directions.has(get_opposite_direction(sending_dir)):
 								direction_correct = true
@@ -320,7 +322,7 @@ func tick_element():
 			await get_tree().create_timer(0.1).timeout
 			if is_instance_valid(element):
 				element.processed_resources.erase(resource)
-				recieving_queue.erase(element)
+				if recieving_queue and !recieving_queue.is_empty(): recieving_queue.erase(element)
 	
 	if _ready_to_activate():
 		await activate_element()	
@@ -366,7 +368,11 @@ func _ready_to_activate() -> bool:
 		
 
 var movement_tween : Tween
-var resource_sending : bool = false
+var resource_sending : bool = false :
+	set(value):
+		resource_sending = value
+		if self is Sender:
+			pass
 func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = true
 	if movement_tween and movement_tween.is_running():

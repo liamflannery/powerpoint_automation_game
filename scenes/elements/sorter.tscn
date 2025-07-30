@@ -39,11 +39,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -24.0
-offset_bottom = 25.0
+offset_left = -21.0
+offset_top = -5.0
+offset_right = 3.0
+offset_bottom = 20.0
 grow_horizontal = 0
 theme_type_variation = &"ExitButton"
-text = "X"
 
 [node name="out_top" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -165,6 +166,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="resource_delete_button" type="Button" parent="."]
+visible = false
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = 1
@@ -177,6 +179,5 @@ offset_bottom = 67.0
 grow_horizontal = 0
 scale = Vector2(0.628083, 0.628083)
 theme_type_variation = &"ExitButton"
-text = "X"
 
 [connection signal="pressed" from="resource_delete_button" to="." method="_on_resource_delete_button_pressed"]

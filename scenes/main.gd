@@ -9,9 +9,12 @@ var arrow_placement_mode := false :
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
-		%produced_label.text = str(value) + "/" + str(target_resources)
+		%produced_label.text = "Produced: \n" + str(value) + "/" + str(target_resources)
 		if produced_resources >= target_resources:
-			go_to_next_target()
+			target = null
+			if current_contract:
+				create_email(current_contract.difficulty_level + 1)
+
 func _ready() -> void:
 	for child in %PageParent.get_children():
 		var tiles : Array[Tile]
@@ -20,9 +23,38 @@ func _ready() -> void:
 			tile.texture = load("res://assets/tile_no_outline.png")
 		page_tiles.append(tiles)
 	Stage.register_main(self)
-	await get_tree().create_timer(0.1).timeout
-	level = 1
-	set_target(level)
+	await get_tree().create_timer(2).timeout
+	create_email(1)
+
+var current_contract : Email
+var funny_subject_lines = [
+	"no subject",
+	"RE: please send me a harder challenge",
+	"FW: can you send this to that dumbass that makes slides",
+	"struggle to make slides with this ONE WEIRD TRICK",
+	"hot slides in your area",
+	"CONGRATULATIONS you've won another slide challenge",
+	
+]
+func create_email(this_level : int):
+	var subject 
+	match this_level:
+		1:
+			subject = "First task"
+		2: 
+			subject = "Second task"
+		3:
+			subject = "Damn okay see if you can do this"
+		4:
+			subject = "I've cooked on this one"
+		5:
+			subject = "The brain destroyer"
+		_:
+			subject = funny_subject_lines.pop_at(randi_range(0, funny_subject_lines.size() -1))
+			if !subject or subject == "":
+				subject = "Ive run out of subject line ideas"
+	var email = Email.new(subject, "Liam Flannery", this_level, %time.get_time())
+	%email_inbox.recieve_email(email)
 	
 	
 
@@ -74,6 +106,19 @@ func get_tiles() -> Array[Tile]:
 	return tiles
 
 
+func is_window_focused(node : Control) -> bool:
+	var window_of_node
+	var current_node = node
+	while !window_of_node:
+		if current_node.is_in_group("window"):
+			window_of_node = current_node
+		elif current_node.get_parent():
+			current_node = current_node.get_parent()
+		else:
+			return false
+	var windows = get_children().filter(func(child): return child.is_in_group("window") and child.visible)
+	return window_of_node == windows.back()
+
 func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=false):
 	var tiles : Array[Tile]
 	for group in %PageParent.get_children():
@@ -94,6 +139,10 @@ var counter = 0
 
 var highlighted_tiles : Array
 var direction : Element.DIRECTION 
+
+
+
+
 func _process(delta: float) -> void:
 	for page in %PageParent.get_children():
 		var tiles = page.get_children()
@@ -178,8 +227,7 @@ func _process(delta: float) -> void:
 
 var target : GameResource
 
-func get_target() -> GameResource:
-	return target
+
 
 
 
@@ -226,40 +274,46 @@ func drag_ended():
 		for element in tile.elements:
 			element.set_direction()
 	
-	arrow_placement_mode = false
+
 	
 var level = 1 : 
 	set(value):
 		level = value
-		%level_text.text = "Level: " + str(level)
-var target_resources 
-func go_to_next_target():
-	level += 1
-	produced_resources = 0
-	set_target(level)
+		%level_text.text = "Level " + str(level) + ", produce the following:"
+var target_resources = 20
 
-func set_target(level : int):
-	if target: target.queue_free()
+
+
+
+class Email:
+	var subject_line : String
+	var from : String
+	var time : String
+	var difficulty_level : int
+	func _init(subject : String, from_text : String, level : int, current_time : String) -> void:
+		subject_line = subject
+		from = from_text
+		difficulty_level = level
+		time = current_time
+
+func get_target(level : int) -> GameResource:
+	var target : GameResource
 	match level:
 		1:
-			target_resources = 10
+
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
-			%target2.add_child(target)
 		2: 
-			target_resources = 20
+	
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
-			%target2.add_child(target)
 			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
 		3: 
-			target_resources = 50
+
 			target = load("res://scenes/game resources/slide.tscn").instantiate()
-			%target2.add_child(target)
 			target._set_content(IndividualResource.CONTENT_TYPE.TITLE)
 			target._set_colour(IndividualResource.RESOURCE_COLOUR.BLUE)
 		4:
-			target_resources = 50
+		
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
-			%target2.add_child(target)
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			
@@ -277,12 +331,11 @@ func set_target(level : int):
 			target.add_resource(load("res://scenes/game resources/star_wipe.tscn").instantiate())
 			target.add_resource(slide_2)
 		5:
-			target_resources = 50
+
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_3 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
-			%target2.add_child(target)
 			add_child(slide_1)
 			add_child(slide_2)
 			add_child(slide_3)
@@ -300,12 +353,11 @@ func set_target(level : int):
 			target.add_resource(load("res://scenes/game resources/fade.tscn").instantiate())
 			target.add_resource(slide_3)
 		_:
-			target_resources = 1000
+	
 			target = load("res://scenes/game resources/slide_group.tscn").instantiate()
 			var slide_1 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_2 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
 			var slide_3 : IndividualResource = load("res://scenes/game resources/slide.tscn").instantiate()
-			%target2.add_child(target)
 			add_child(slide_1)
 			add_child(slide_2)
 			add_child(slide_3)
@@ -328,6 +380,9 @@ func set_target(level : int):
 			target.add_resource(slide_3)
 	target.z_as_relative = true
 	target.z_index = 0
+	for child in target.get_children():
+		child.z_as_relative = true
+		child.z_index = 1
+
 	produced_resources = 0
-	
-	target.position = %target2.position + %target2.size/2 - target.size/2
+	return target

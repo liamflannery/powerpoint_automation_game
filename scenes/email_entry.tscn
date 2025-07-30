@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkoonbeqcbhvh"]
+
+[ext_resource type="Script" uid="uid://ep8by0pib2e1" path="res://scenes/email_entry.gd" id="1_v34xn"]
+[ext_resource type="Texture2D" uid="uid://dm5q6tbre7nwm" path="res://assets/email_closed.png" id="2_5jnxe"]
+
+[node name="email_entry" type="PanelContainer" node_paths=PackedStringArray("this_button", "text_parent", "from_text", "subject_line", "sent_time", "open_close_icon")]
+mouse_filter = 2
+theme_type_variation = &"InvisiblePanel"
+script = ExtResource("1_v34xn")
+this_button = NodePath("Button")
+text_parent = NodePath("MarginContainer/HBoxContainer")
+from_text = NodePath("MarginContainer/HBoxContainer/from")
+subject_line = NodePath("MarginContainer/HBoxContainer/subject")
+sent_time = NodePath("MarginContainer/HBoxContainer/time")
+open_close_icon = NodePath("MarginContainer/HBoxContainer/TextureRect")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 10)
+layout_mode = 2
+texture = ExtResource("2_5jnxe")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="from" type="Label" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Liam Flannery "
+text_overrun_behavior = 3
+
+[node name="subject" type="Label" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Welcome"
+text_overrun_behavior = 3
+
+[node name="time" type="Label" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "9:10am"
+text_overrun_behavior = 3
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"InvisibleButton"

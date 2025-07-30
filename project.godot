@@ -31,11 +31,12 @@ enabled=PackedStringArray("res://addons/save_system/plugin.cfg")
 [global_group]
 
 persist=""
+window=""
 
 [gui]
 
 theme/custom="uid://cvq2ttrxjysju"
-theme/custom_font="uid://7juthh775lhu"
+theme/custom_font="uid://80f5vdk0lhte"
 theme/default_font_multichannel_signed_distance_field=true
 
 [input]
@@ -48,5 +49,6 @@ mouse_left={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
