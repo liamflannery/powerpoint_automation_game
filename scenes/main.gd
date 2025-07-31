@@ -9,7 +9,7 @@ var arrow_placement_mode := false :
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
-		%produced_label.text = "Produced: \n" + str(value) + "/" + str(target_resources)
+		%target_text.text = str(value) + "/" + str(target_resources)
 		if produced_resources >= target_resources:
 			target = null
 			if current_contract:
@@ -24,7 +24,7 @@ func _ready() -> void:
 		page_tiles.append(tiles)
 	Stage.register_main(self)
 	await get_tree().create_timer(2).timeout
-	create_email(1)
+	create_email(5)
 
 var current_contract : Email
 var funny_subject_lines = [
@@ -225,7 +225,16 @@ func _process(delta: float) -> void:
 				tile.reset_tile()
 
 
-var target : GameResource
+var target : GameResource :
+	set(value):
+		target = value
+		var sub_view = target.duplicate()
+		%target_parent.add_child(sub_view)
+		%target_parent.move_child(sub_view, 0)
+		await get_tree().process_frame
+		sub_view.pivot_offset = sub_view.size/2
+		sub_view.scale *= 0.9
+		produced_resources = 0
 
 
 
@@ -384,5 +393,7 @@ func get_target(level : int) -> GameResource:
 		child.z_as_relative = true
 		child.z_index = 1
 
-	produced_resources = 0
 	return target
+
+func get_email_inbox() -> EmailInbox:
+	return %email_inbox

@@ -36,4 +36,5 @@ func _on_quit_button_pressed() -> void:
 func _on_accept_button_pressed() -> void:
 	Stage.get_main().target = level_box.get_child(0)
 	Stage.get_main().current_contract = content
+	Stage.get_main().get_email_inbox().set_target_email(self)
 	hide()
