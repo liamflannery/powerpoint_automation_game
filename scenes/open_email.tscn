@@ -8,7 +8,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0.501961, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_2wyq8"]
 gradient = SubResource("Gradient_og1vs")
 
-[node name="open_email" type="PanelContainer" node_paths=PackedStringArray("subject_line", "from", "time", "to", "accept_button", "reject_button", "intro", "level_box", "sign_off", "top_bar_button") groups=["window"]]
+[node name="open_email" type="PanelContainer" node_paths=PackedStringArray("subject_line", "from", "time", "to", "accept_button", "intro", "level_box", "sign_off", "top_bar_button") groups=["window"]]
 z_index = 5
 anchors_preset = 8
 anchor_left = 0.5
@@ -29,7 +29,6 @@ from = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxC
 time = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/time")
 to = NodePath("VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/to")
 accept_button = NodePath("VBoxContainer/MarginContainer/HBoxContainer2/accept_button")
-reject_button = NodePath("")
 intro = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label")
 level_box = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/level_box")
 sign_off = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label2")

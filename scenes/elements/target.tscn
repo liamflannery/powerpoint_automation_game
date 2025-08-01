@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://ds5uf2qsne31v"]
+[gd_scene load_steps=11 format=3 uid="uid://ds5uf2qsne31v"]
 
+[ext_resource type="Texture2D" uid="uid://coa87tsugofly" path="res://assets/target.png" id="1_3c7jw"]
 [ext_resource type="Script" uid="uid://bycy7jllq3rrv" path="res://scenes/elements/target.gd" id="2_trwdl"]
 [ext_resource type="Texture2D" uid="uid://b6otdh4ob7vwl" path="res://assets/connector_out_top.png" id="3_3c7jw"]
 [ext_resource type="Texture2D" uid="uid://cj2int62fmopv" path="res://assets/connector_out_bottom.png" id="4_4yaup"]
@@ -23,6 +24,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_3c7jw")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_trwdl")

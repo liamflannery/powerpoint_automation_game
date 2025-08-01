@@ -23,3 +23,12 @@ func test_notification_icon():
 			set_icons_to_notification()
 			return
 	set_icons_to_default()
+
+
+func _on_target_button_pressed() -> void:
+	print("pressed")
+	target_email.show()
+
+var target_email : OpenEmail
+func set_target_email(email : OpenEmail):
+	target_email = email

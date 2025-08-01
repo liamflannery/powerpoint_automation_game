@@ -6,11 +6,16 @@ var arrow_placement_mode := false :
 	set(value):
 		arrow_placement_mode = value
 		if !arrow_placement_mode: %ArrowButton.release_focus()
-		
+
+var movement_mode := false :
+	set(value):
+		movement_mode = value
+		if !movement_mode: %cursor_button.release_focus()
+
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
-		%produced_label.text = "Produced: \n" + str(value) + "/" + str(target_resources)
+		%target_text.text = str(value) + "/" + str(target_resources)
 		if produced_resources >= target_resources:
 			target = null
 			if current_contract:
@@ -24,8 +29,13 @@ func _ready() -> void:
 			tile.texture = load("res://assets/tile_no_outline.png")
 		page_tiles.append(tiles)
 	Stage.register_main(self)
+	await get_tree().process_frame
+	for child in %PageParent.get_children():
+		for tile in child.get_children():
+			for element in tile.elements:
+				element.locked = true
 	await get_tree().create_timer(2).timeout
-	create_email(1)
+	create_email(5)
 
 var current_contract : Email
 var funny_subject_lines = [
@@ -139,22 +149,31 @@ var counter = 0
 
 var highlighted_tiles : Array
 var direction : Element.DIRECTION 
+var moving_element : Element
+var cooldown = 0.0
 
 func tick_elements() -> void:
 	"""Loop through all pages and tiles and tick elements"""
-	for page in %PageParent.get_children():
-		var tiles = page.get_children()
-		for tile in tiles:
-			for element in tile.elements:
-				element.tick_element()
+
+  for page in %PageParent.get_children():
+  var tiles = page.get_children()
+  for tile in tiles:
+    for element : Element in tile.elements:
+      if element.is_mouse_over_element() and movement_mode and !element.locked:
+        if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
+          if !moving_element:
+            element.placement_mode = true
+            moving_element = element
+            continue
+      if element == moving_element:
+        continue
+      element.tick_element()
 
 func _process(delta: float) -> void:
-	var is_paused = false
-	
+	cooldown += delta
 	if not %pause_button.button_pressed:
 		tick_elements()
-	
-	
+
 	if !arrow_placement_mode:
 		return
 	if Input.is_action_just_pressed("mouse_left"):
@@ -229,7 +248,16 @@ func _process(delta: float) -> void:
 				tile.reset_tile()
 
 
-var target : GameResource
+var target : GameResource :
+	set(value):
+		target = value
+		var sub_view = target.duplicate()
+		%target_parent.add_child(sub_view)
+		%target_parent.move_child(sub_view, 0)
+		await get_tree().process_frame
+		sub_view.pivot_offset = sub_view.size/2
+		sub_view.scale *= 0.9
+		produced_resources = 0
 
 
 
@@ -386,5 +414,7 @@ func get_target(level : int) -> GameResource:
 		child.z_as_relative = true
 		child.z_index = 1
 
-	produced_resources = 0
 	return target
+
+func get_email_inbox() -> EmailInbox:
+	return %email_inbox

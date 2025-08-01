@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=53 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -12,16 +12,18 @@
 [ext_resource type="Script" uid="uid://sdqbndayjy44" path="res://scenes/quit.gd" id="6_c6pm6"]
 [ext_resource type="PackedScene" uid="uid://h6t70kv7fgti" path="res://scenes/elements/merger.tscn" id="6_choun"]
 [ext_resource type="Texture2D" uid="uid://dll3dfgehpjg0" path="res://assets/arrow_button_icon.png" id="6_fv21b"]
+[ext_resource type="Texture2D" uid="uid://k2p4cscv30h1" path="res://assets/cursor.png" id="7_fuf3a"]
 [ext_resource type="PackedScene" uid="uid://ds5uf2qsne31v" path="res://scenes/elements/target.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Texture2D" uid="uid://0thr3pucg6i3" path="res://assets/slide_grouper_icon.png" id="8_5q0nq"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
+[ext_resource type="Script" uid="uid://c6e2qdprhr2ea" path="res://scenes/clear_all.gd" id="8_jscy8"]
+[ext_resource type="Script" uid="uid://cgfthf1xl462l" path="res://scenes/movement_mode.gd" id="8_pibwh"]
 [ext_resource type="PackedScene" uid="uid://b5k1eqmjva61t" path="res://scenes/elements/bin.tscn" id="8_pm3ni"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bb0rfgf82yqcn" path="res://assets/merger_icon_solo.png" id="9_yq6so"]
 [ext_resource type="Script" uid="uid://d2f4bllq8xusb" path="res://scenes/save.gd" id="10_y6deb"]
 [ext_resource type="Script" uid="uid://bb7x6ypa4mm72" path="res://scenes/load.gd" id="11_og1vs"]
-[ext_resource type="Texture2D" uid="uid://b2o788mtkau0k" path="res://assets/reciever.png" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cff0vnm6gteur" path="res://assets/sorter_icon.png" id="12_qkpxi"]
 [ext_resource type="Texture2D" uid="uid://bsvxoed8so5j6" path="res://assets/slide_icon_side.png" id="13_og1vs"]
 [ext_resource type="Texture2D" uid="uid://blk1nu4i20m2j" path="res://assets/pointer_icon_button.png" id="14_5he1u"]
@@ -210,7 +212,20 @@ text = "Add Page"
 expand_icon = true
 script = ExtResource("2_ya4ey")
 
-[node name="ArrowButton" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
+[node name="cursor_button" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Enter arrow drawing mode"
+shortcut = SubResource("Shortcut_y6deb")
+icon = ExtResource("7_fuf3a")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pibwh")
+
+[node name="ArrowButton" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
+
 unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
@@ -449,77 +464,35 @@ script = ExtResource("9_eb6dy")
 [node name="A01" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="target2" type="TextureRect" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A01"]
-unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
-layout_mode = 0
-offset_left = 200.0
-offset_top = 2.0
-offset_right = 753.0
-offset_bottom = 89.0
-texture = ExtResource("11_ya4ey")
-expand_mode = 1
+[node name="tile2" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 
-[node name="produced_label" type="Label" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A01/target2"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 12.5
-offset_top = -8.49999
-offset_right = 21.5
-offset_bottom = 9.16668
-grow_vertical = 2
-text = "0"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="HBoxContainer" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A01/target2"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
-
-[node name="level_text" type="Label" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A01/target2/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "0"
-
-[node name="A02" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
 [node name="A03" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A03" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
-west_port = 1
 
-[node name="A04" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
+[node name="tile4" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A04" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
+[node name="tile5" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 
-[node name="A05" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
 [node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A05" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
+west_port = 1
 
 [node name="A06" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
 [node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A06" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
+east_port = 1
 
 [node name="A07" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
 
 [node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A07" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
@@ -532,6 +505,7 @@ layout_mode = 1
 east_port = 1
 
 [node name="A09" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
+
 layout_mode = 2
 
 [node name="A10" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
@@ -1313,19 +1287,20 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="factory_95/bottom_bar/MarginContainer"]
+[node name="tool_bar" type="HBoxContainer" parent="factory_95/bottom_bar/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="pause_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
+
 layout_mode = 2
 theme_override_constants/icon_max_width = 19
 toggle_mode = true
 text = "Pause"
 icon = ExtResource("26_2wyq8")
 
-[node name="Button2" type="Button" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="factory_95/bottom_bar/MarginContainer/tool_bar"]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
@@ -1335,7 +1310,7 @@ text = "Factory 95 - Presentation..."
 icon = ExtResource("2_vxglm")
 alignment = 0
 
-[node name="email_app_toolbar_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
+[node name="email_app_toolbar_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/tool_bar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
@@ -1346,20 +1321,54 @@ text = "Email"
 icon = ExtResource("37_cjqg0")
 alignment = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="factory_95/bottom_bar/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="factory_95/bottom_bar/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="target_container" type="PanelContainer" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_type_variation = &"InvisiblePanel"
+
+[node name="margincontainer" type="MarginContainer" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/target_container"]
+layout_mode = 2
+theme_override_constants/margin_left = -10
+theme_override_constants/margin_top = -10
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = -10
+
+[node name="target_parent" type="HBoxContainer" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/target_container/margincontainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="target_text" type="Label" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/target_container/margincontainer/target_parent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "no target"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="target_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/target_container"]
+layout_mode = 2
+theme_type_variation = &"InvisibleButton"
+
+[node name="time_container" type="PanelContainer" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_type_variation = &"IndentedPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="factory_95/bottom_bar/MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/time_container"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="time" type="Label" parent="factory_95/bottom_bar/MarginContainer/PanelContainer/MarginContainer"]
+[node name="time" type="Label" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer/time_container/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
@@ -1418,7 +1427,7 @@ mouse_filter = 2
 theme_type_variation = &"ToolBar"
 script = ExtResource("42_vchkt")
 top_bar_button = NodePath("VBoxContainer/top_bar/Button2")
-tool_bar_button = NodePath("../factory_95/bottom_bar/MarginContainer/HBoxContainer/email_app_toolbar_button")
+tool_bar_button = NodePath("../factory_95/bottom_bar/MarginContainer/tool_bar/email_app_toolbar_button")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="email_inbox"]
 layout_mode = 2
@@ -1527,4 +1536,5 @@ mouse_filter = 2
 theme_override_constants/separation = -2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="factory_95/bottom_bar/MarginContainer/HBoxContainer/target_container/target_button" to="email_inbox" method="_on_target_button_pressed"]
 [connection signal="pressed" from="email_inbox/VBoxContainer/top_bar/Button" to="email_inbox" method="quit_button_pressed"]
