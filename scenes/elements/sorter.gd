@@ -12,6 +12,17 @@ func get_send_to() -> Array[Tile]:
 	else:
 		return [adjacent_tiles[get_clockwise_direction(get_opposite_direction(recieving_directions[0]))]]
 
+func place_on_tile(tile: Tile) -> void:
+	if to_sort:
+		super(tile)
+		return
+	for element in tile.elements:
+		if element is Arrow:
+			for resource in element.processed_resources + element.queued_resources:
+				set_to_sort(resource)
+				break
+	super(tile)
+
 func activate_element():
 	element_activating = true
 	if !to_sort and !queued_resources.is_empty():
