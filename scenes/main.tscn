@@ -495,7 +495,7 @@ layout_mode = 2
 
 [node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A10" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
-east_port = 1
+west_port = 1
 
 [node name="B01" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
