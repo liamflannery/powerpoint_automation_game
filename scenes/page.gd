@@ -64,10 +64,10 @@ func _ready() -> void:
 
 func set_next(new_next : Element): 
 	next_page_sender = new_next
-	
+
 func set_previous(new_previous : Element): 
 	previous_page_sender = new_previous
-	
+
 func get_next_page() -> Page:
 	if self == get_parent().get_children().back():
 		return null

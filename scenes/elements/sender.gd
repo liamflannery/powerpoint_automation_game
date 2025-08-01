@@ -6,9 +6,6 @@ enum MODE{PREVIOUS, NEXT}
 var parent_page : Page
 @export var tile_text : Label
 
-## var slide_change_button = Button.new()
-
-
 func set_parent_page(this_page : Page):
 	if to_page == MODE.PREVIOUS:
 		texture_rect.texture = load("res://assets/previous_slide.png")
