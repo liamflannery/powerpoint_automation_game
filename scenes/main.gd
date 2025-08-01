@@ -174,11 +174,17 @@ func _process(delta: float) -> void:
 	if not %pause_button.button_pressed:
 		tick_elements()
 
+	if Input.is_action_just_pressed("mouse_left"):
+		if !%PageParent.get_global_rect().has_point(get_global_mouse_position()) and movement_mode:
+			movement_mode = false
 	if !arrow_placement_mode:
 		return
 	if Input.is_action_just_pressed("mouse_left"):
 		if %PageParent.get_global_rect().has_point(get_global_mouse_position()):
 			drag_started()
+		else:
+			arrow_placement_mode = false
+
 	if Input.is_action_just_released("mouse_left"):
 		if %PageParent.get_global_rect().has_point(get_global_mouse_position()):
 			drag_ended()
