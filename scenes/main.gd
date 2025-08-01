@@ -141,7 +141,7 @@ func get_closest_tile_to_position(to_position : Vector2, include_full_tiles=fals
 		
 	var sorted_tiles = tiles.duplicate()
 	if !include_full_tiles:
-		sorted_tiles = sorted_tiles.filter(func(tile): return tile.elements.is_empty())
+		sorted_tiles = sorted_tiles.filter(func(tile): return tile.elements.filter(func(element): return element is not Arrow).is_empty())
 	sorted_tiles.sort_custom(func(a,b): return to_position.distance_to(a.global_position + a.size/2) < to_position.distance_to(b.global_position + b.size/2))
 	return sorted_tiles.front()
 	
@@ -161,7 +161,7 @@ func tick_elements() -> void:
 			for element : Element in tile.elements:
 				if element.is_mouse_over_element() and movement_mode and !element.locked:
 					if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
-						if !moving_element:
+						if !moving_element and element is not Arrow:
 							element.placement_mode = true
 							moving_element = element
 							continue

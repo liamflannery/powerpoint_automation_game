@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Texture2D" uid="uid://0thr3pucg6i3" path="res://assets/slide_grouper_icon.png" id="8_5q0nq"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
-[ext_resource type="Script" path="res://scenes/movement_mode.gd" id="8_pibwh"]
+[ext_resource type="Script" uid="uid://cgfthf1xl462l" path="res://scenes/movement_mode.gd" id="8_pibwh"]
 [ext_resource type="PackedScene" uid="uid://b5k1eqmjva61t" path="res://scenes/elements/bin.tscn" id="8_pm3ni"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bb0rfgf82yqcn" path="res://assets/merger_icon_solo.png" id="9_yq6so"]
