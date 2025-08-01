@@ -473,6 +473,10 @@ script = ExtResource("9_eb6dy")
 [node name="A01" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A01" instance=ExtResource("7_o6xl0")]
+layout_mode = 1
+east_port = 1
+
 [node name="A02" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -488,28 +492,21 @@ layout_mode = 2
 [node name="A06" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A06" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
-east_port = 1
-
 [node name="A07" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A07" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
-
 [node name="A08" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A08" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
-east_port = 1
 
 [node name="A09" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
 [node name="A10" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
+[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A10" instance=ExtResource("7_o6xl0")]
+layout_mode = 1
+west_port = 1
 
 [node name="B01" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
