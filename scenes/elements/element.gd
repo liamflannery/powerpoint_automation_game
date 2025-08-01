@@ -32,16 +32,20 @@ var parent_tile : Tile
 var adjacent_tiles : Array[Tile]
 
 func _ready() -> void:
-	mouse_entered.connect(_show_delete_button)
-	mouse_exited.connect(_hide_delete_button)
+
 	if delete_button:
 		delete_button.hide()
 		delete_button.mouse_exited.connect(_hide_delete_button)
 		delete_button.pressed.connect(delete_element)
+		child_entered_tree.connect(child_added)
+		delete_button.z_index = 1
 	_initialise_ports()
 	if self is not Arrow:
 		z_as_relative = false
 		z_index = 1
+
+func child_added(node):
+	delete_button.move_to_front()
 
 func _initialise_ports():
 	sending_directions.clear()
@@ -78,7 +82,7 @@ func delete_element():
 				element.recieving_queue.erase(self)
 	parent_tile.elements.erase(self)
 	for resource in queued_resources + processed_resources:
-		resource.queue_free()
+		if is_instance_valid(resource): resource.queue_free()
 	
 	queue_free()
 
@@ -259,6 +263,10 @@ func activate_element():
 var previously_sent : Array[Tile]
 
 func tick_element():
+	if is_mouse_over_element():
+		_show_delete_button()
+	else:
+		_hide_delete_button()
 	if !processed_resources.is_empty() and !element_activating:
 		if self is Producer and self.producing_resource == load("res://scenes/game resources/slide.tscn"):
 			pass
