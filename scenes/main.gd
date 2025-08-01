@@ -167,7 +167,7 @@ func tick_elements() -> void:
 							continue
 						if element == moving_element:
 							continue
-					element.tick_element()
+				element.tick_element()
 
 func _process(delta: float) -> void:
 	cooldown += delta
