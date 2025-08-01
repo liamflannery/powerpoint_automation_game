@@ -1,5 +1,5 @@
 extends Button
-
+class_name BuildingCreator
 @export var element_scene : PackedScene
 @export var multi_place := false
 func _ready() -> void:
@@ -27,4 +27,4 @@ func _pressed() -> void:
 		_pressed()
 	
 func _process(delta: float) -> void:
-	disabled = Stage.get_main().arrow_placement_mode || Stage.get_main().movement_mode
+	disabled = Stage.get_main().arrow_placement_mode || Stage.get_main().movement_mode || Stage.get_main().is_page_full()

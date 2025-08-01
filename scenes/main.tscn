@@ -207,6 +207,7 @@ text = "Reset"
 script = ExtResource("5_fuf3a")
 
 [node name="ElementButtonContainer" type="HBoxContainer" parent="factory_95/TopPanel/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

@@ -426,3 +426,22 @@ func get_target(level : int) -> GameResource:
 
 func get_email_inbox() -> EmailInbox:
 	return %email_inbox
+
+func is_page_full():
+	var full = true
+	for tile in get_current_page().get_children():
+		if tile.elements.is_empty():
+			full = false 
+			break
+	
+	return full
+
+func get_current_page() -> Page:
+	for pg in %PageParent.get_children():
+			if pg.visible:
+				return pg
+	return null
+
+
+	#
+		
