@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=53 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -11,11 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://d1rrpk272twxq" path="res://scenes/elements/slide_grouper.tscn" id="5_yc10j"]
 [ext_resource type="PackedScene" uid="uid://h6t70kv7fgti" path="res://scenes/elements/merger.tscn" id="6_choun"]
 [ext_resource type="Texture2D" uid="uid://dll3dfgehpjg0" path="res://assets/arrow_button_icon.png" id="6_fv21b"]
+[ext_resource type="Texture2D" uid="uid://k2p4cscv30h1" path="res://assets/cursor.png" id="7_fuf3a"]
 [ext_resource type="PackedScene" uid="uid://ds5uf2qsne31v" path="res://scenes/elements/target.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Texture2D" uid="uid://0thr3pucg6i3" path="res://assets/slide_grouper_icon.png" id="8_5q0nq"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
 [ext_resource type="Script" uid="uid://c6e2qdprhr2ea" path="res://scenes/clear_all.gd" id="8_jscy8"]
+[ext_resource type="Script" uid="uid://cgfthf1xl462l" path="res://scenes/movement_mode.gd" id="8_pibwh"]
 [ext_resource type="PackedScene" uid="uid://b5k1eqmjva61t" path="res://scenes/elements/bin.tscn" id="8_pm3ni"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bb0rfgf82yqcn" path="res://assets/merger_icon_solo.png" id="9_yq6so"]
@@ -204,6 +206,18 @@ size_flags_vertical = 4
 text = "Add Page"
 expand_icon = true
 script = ExtResource("2_ya4ey")
+
+[node name="cursor_button" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Enter arrow drawing mode"
+shortcut = SubResource("Shortcut_y6deb")
+icon = ExtResource("7_fuf3a")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_pibwh")
 
 [node name="ArrowButton" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true

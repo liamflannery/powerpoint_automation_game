@@ -172,10 +172,14 @@ func element_connected() -> bool:
 	return false
 
 func element_placed(on_tile : Tile):
+	Stage.get_main().cooldown = 0
+	if Stage.get_main().moving_element == self:
+		Stage.get_main().moving_element = null
 	parent_tile = on_tile
 	reparent(parent_tile)
 	adjacent_tiles = Stage.get_main().get_adjacent_tiles(parent_tile)
 	placement_mode = false
+	set_direction()
 	
 				
 		
@@ -211,7 +215,7 @@ func _input(event: InputEvent) -> void:
 			var mouse_event = event as InputEventMouseButton
 			
 			# Left click - place element on tile
-			if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.is_released():
 				if closest_tile:
 					place_on_tile(closest_tile)
 			
@@ -219,7 +223,13 @@ func _input(event: InputEvent) -> void:
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
 				if is_mouse_over_element():
 					change_direction()
-var placement_mode = true
+var placement_mode = true :
+	set(value):
+		placement_mode = value
+		if parent_tile and placement_mode:
+			parent_tile.elements.erase(self)
+			parent_tile = null
+var locked : bool = false
 func is_in_placement_mode() -> bool:
 	return placement_mode
 

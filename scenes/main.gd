@@ -6,6 +6,10 @@ var arrow_placement_mode := false :
 	set(value):
 		arrow_placement_mode = value
 		if !arrow_placement_mode: %ArrowButton.release_focus()
+var movement_mode := false :
+	set(value):
+		movement_mode = value
+		if !movement_mode: %cursor_button.release_focus()
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
@@ -23,6 +27,11 @@ func _ready() -> void:
 			tile.texture = load("res://assets/tile_no_outline.png")
 		page_tiles.append(tiles)
 	Stage.register_main(self)
+	await get_tree().process_frame
+	for child in %PageParent.get_children():
+		for tile in child.get_children():
+			for element in tile.elements:
+				element.locked = true
 	await get_tree().create_timer(2).timeout
 	create_email(5)
 
@@ -142,14 +151,27 @@ var direction : Element.DIRECTION
 
 
 
-
+var moving_element : Element
+var cooldown = 0.0
 func _process(delta: float) -> void:
+	cooldown += delta
 	for page in %PageParent.get_children():
 		var tiles = page.get_children()
 		for tile in tiles:
-			for element in tile.elements:
+			for element : Element in tile.elements:
+				if element.is_mouse_over_element() and movement_mode and !element.locked:
+					if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
+						if !moving_element:
+							element.placement_mode = true
+							moving_element = element
+							continue
+				if element == moving_element:
+					continue
 				element.tick_element()
+				
 	
+
+		
 	
 	if !arrow_placement_mode:
 		return

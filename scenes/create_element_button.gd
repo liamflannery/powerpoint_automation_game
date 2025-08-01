@@ -27,4 +27,4 @@ func _pressed() -> void:
 		_pressed()
 	
 func _process(delta: float) -> void:
-	disabled = Stage.get_main().arrow_placement_mode
+	disabled = Stage.get_main().arrow_placement_mode || Stage.get_main().movement_mode
