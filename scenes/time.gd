@@ -11,4 +11,4 @@ func get_time() -> String:
 	minute_text += str(minute)
 	var am_pm = "AM" if hour < 12 else "PM"
 	var hour_text = str(hour) if hour <= 12 else str(hour - 12)
-	return hour_text +":" + minute_text + "  " + am_pm
+	return hour_text + ":" + minute_text + "  " + am_pm

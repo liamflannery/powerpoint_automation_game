@@ -64,13 +64,12 @@ func _initialise_ports():
 		recieving_directions.append(3)
 	set_direction()
 	
-
-
-
 func _show_delete_button():
 	if delete_button and !Stage.get_main().arrow_placement_mode and !is_in_placement_mode(): delete_button.show()
+
 func _hide_delete_button():
 	if delete_button and !delete_button.get_global_rect().has_point(get_global_mouse_position()) and !get_global_rect().has_point(get_global_mouse_position()): delete_button.hide()
+
 func delete_element():
 	for adj in adjacent_tiles:
 		if !adj: continue
@@ -83,7 +82,6 @@ func delete_element():
 	
 	queue_free()
 
-
 func change_direction():
 	for i in sending_directions.size():
 		sending_directions[i] = get_clockwise_direction(sending_directions[i])
@@ -93,9 +91,6 @@ func change_direction():
 	
 func predict_direction(on_tile : Tile):
 	pass
-
-
-
 
 func reset_tile(tile : Tile):
 	pass
@@ -191,6 +186,7 @@ func clear_placement_mode():
 
 
 var closest_tile : Tile
+
 func _input(event: InputEvent) -> void:
 	# Check if we're in placement mode (you'll need to define this condition based on your game state)
 	if !Stage.get_main():
@@ -219,13 +215,14 @@ func _input(event: InputEvent) -> void:
 			elif mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
 				if is_mouse_over_element():
 					change_direction()
+
 var placement_mode = true
+
 func is_in_placement_mode() -> bool:
 	return placement_mode
 
 func get_closest_tile_to_mouse() -> Tile:
 	return Stage.get_main().get_closest_tile_to_position(get_global_mouse_position())
-
 
 func place_on_tile(tile: Tile) -> void:
 	# Place the element on the specified tile
@@ -235,7 +232,6 @@ func place_on_tile(tile: Tile) -> void:
 			tile.clear_element()
 			tile.elements.append(self)
 		element_placed(tile)
-		
 
 func is_mouse_over_element() -> bool:
 	var mouse_pos = get_global_mouse_position()
@@ -243,12 +239,15 @@ func is_mouse_over_element() -> bool:
 	return rect.has_point(mouse_pos)
 
 var element_activating = false
+
 func activate_element():
 	element_activating = true
 	if !queued_resources.is_empty():
 		processed_resources.append(queued_resources.pop_back())
 	element_activating = false
+
 var previously_sent : Array[Tile]
+
 func tick_element():
 	if !processed_resources.is_empty() and !element_activating:
 		if self is Producer and self.producing_resource == load("res://scenes/game resources/slide.tscn"):
@@ -329,11 +328,11 @@ func tick_element():
 
 var previously_recieved_from : Array[Element]
 var recieving_queue : Dictionary[Element, GameResource] = {}
+
 func request_send(from_tile : Element, with_resource : GameResource):
 	if recieving_queue.keys().has(from_tile):
 		return 
 	recieving_queue[from_tile] = with_resource
-
 
 func get_send_to() -> Array[Tile]:
 	var send_to : Array[Tile]
@@ -362,17 +361,16 @@ func get_send_to() -> Array[Tile]:
 
 	return send_to
 
-
 func _ready_to_activate() -> bool:
 	return !queued_resources.is_empty() and !element_activating
 		
-
 var movement_tween : Tween
 var resource_sending : bool = false :
 	set(value):
 		resource_sending = value
 		if self is Sender:
 			pass
+
 func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = true
 	if movement_tween and movement_tween.is_running():
@@ -391,19 +389,16 @@ func send_resource(sent_resource : GameResource, sending_element : Element):
 	resource_sending = false
 
 func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:
-
-	
 	var direction_correct = false
 	for direction in recieving_directions:
 		if sending_element.sending_directions.map(func(dir): return get_opposite_direction(dir)).has(direction):
 			direction_correct = true
 	return queued_resources.size() < max_queued_resources and processed_resources.size() < max_processed_resources and direction_correct
 
-
 var previous_directions : Array[Array]
+
 func save_direction_state():
 	previous_directions = [sending_directions, recieving_directions]
-
 
 func get_opposite_direction(from_direction : DIRECTION) -> DIRECTION:
 	match from_direction:
@@ -436,6 +431,7 @@ func get_save_dict() -> Dictionary:
 	save_dict["sending_directions"] = sending_directions
 	save_dict["recieving_directions"] = recieving_directions
 	return save_dict
+
 func load_from_save_dict(dict : Dictionary):
 	if dict.has("sending_directions") and dict.has("recieving_directions"):
 		sending_directions.clear()
