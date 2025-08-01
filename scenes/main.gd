@@ -155,19 +155,19 @@ var cooldown = 0.0
 func tick_elements() -> void:
 	"""Loop through all pages and tiles and tick elements"""
 
-  for page in %PageParent.get_children():
-  var tiles = page.get_children()
-  for tile in tiles:
-    for element : Element in tile.elements:
-      if element.is_mouse_over_element() and movement_mode and !element.locked:
-        if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
-          if !moving_element:
-            element.placement_mode = true
-            moving_element = element
-            continue
-      if element == moving_element:
-        continue
-      element.tick_element()
+	for page in %PageParent.get_children():
+		var tiles = page.get_children()
+		for tile in tiles:
+			for element : Element in tile.elements:
+				if element.is_mouse_over_element() and movement_mode and !element.locked:
+					if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
+						if !moving_element:
+							element.placement_mode = true
+							moving_element = element
+							continue
+						if element == moving_element:
+							continue
+					element.tick_element()
 
 func _process(delta: float) -> void:
 	cooldown += delta

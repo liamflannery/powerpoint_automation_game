@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=56 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -17,8 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bxclyrhd3tmjj" path="res://scenes/elements/sorter.tscn" id="7_yc10j"]
 [ext_resource type="Texture2D" uid="uid://0thr3pucg6i3" path="res://assets/slide_grouper_icon.png" id="8_5q0nq"]
 [ext_resource type="Script" uid="uid://6kmkokhw6mr2" path="res://scenes/side_panel.gd" id="8_eb6dy"]
-[ext_resource type="Script" uid="uid://c6e2qdprhr2ea" path="res://scenes/clear_all.gd" id="8_jscy8"]
-[ext_resource type="Script" uid="uid://cgfthf1xl462l" path="res://scenes/movement_mode.gd" id="8_pibwh"]
+[ext_resource type="Script" path="res://scenes/movement_mode.gd" id="8_pibwh"]
 [ext_resource type="PackedScene" uid="uid://b5k1eqmjva61t" path="res://scenes/elements/bin.tscn" id="8_pm3ni"]
 [ext_resource type="Script" uid="uid://vlq1svjhe4m1" path="res://scenes/page.gd" id="9_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bb0rfgf82yqcn" path="res://assets/merger_icon_solo.png" id="9_yq6so"]
@@ -203,16 +202,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Add Page" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
-visible = false
-custom_minimum_size = Vector2(35, 35)
-layout_mode = 2
-size_flags_vertical = 4
-text = "Add Page"
-expand_icon = true
-script = ExtResource("2_ya4ey")
-
-[node name="cursor_button" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
+[node name="cursor_button" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
@@ -224,8 +214,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("8_pibwh")
 
-[node name="ArrowButton" type="Button" parent="factory_95/TopPanel/PanelContainer2/MarginContainer/HBoxContainer"]
-
+[node name="ArrowButton" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
@@ -235,6 +224,15 @@ shortcut = SubResource("Shortcut_y6deb")
 icon = ExtResource("6_fv21b")
 expand_icon = true
 script = ExtResource("3_dp3eg")
+
+[node name="Add Page" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
+visible = false
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Add Page"
+expand_icon = true
+script = ExtResource("2_ya4ey")
 
 [node name="Slide_Grouper" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ElementButtonContainer"]
 custom_minimum_size = Vector2(35, 35)
@@ -293,6 +291,7 @@ element_scene = ExtResource("8_pm3ni")
 
 [node name="ClearButtonContainer" type="HBoxContainer" parent="factory_95/TopPanel/PanelContainer/MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
 alignment = 2
 
 [node name="ClearResouces" type="Button" parent="factory_95/TopPanel/PanelContainer/MarginContainer/ClearButtonContainer"]
@@ -454,7 +453,6 @@ size_flags_horizontal = 4
 theme_type_variation = &"Sheet"
 
 [node name="page_1" type="GridContainer" parent="factory_95/MainAreaContainer/PageArea/PageParent"]
-visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
@@ -464,24 +462,17 @@ script = ExtResource("9_eb6dy")
 [node name="A01" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile2" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
-
+[node name="A02" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
 [node name="A03" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-
-[node name="tile4" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
+[node name="A04" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
-[node name="tile5" parent="factory_95/HBoxContainer/ColorRect2/PageParent/page_1" instance=ExtResource("1_ig7tw")]
-
+[node name="A05" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-
-[node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A05" instance=ExtResource("7_o6xl0")]
-layout_mode = 1
-west_port = 1
 
 [node name="A06" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
@@ -492,7 +483,6 @@ east_port = 1
 
 [node name="A07" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
-
 
 [node name="target" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1/A07" instance=ExtResource("7_o6xl0")]
 layout_mode = 1
@@ -505,7 +495,6 @@ layout_mode = 1
 east_port = 1
 
 [node name="A09" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
-
 layout_mode = 2
 
 [node name="A10" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_1" instance=ExtResource("1_ig7tw")]
@@ -632,6 +621,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="page_2" type="GridContainer" parent="factory_95/MainAreaContainer/PageArea/PageParent"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
@@ -1291,16 +1281,15 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="pause_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/HBoxContainer"]
+[node name="pause_button" type="Button" parent="factory_95/bottom_bar/MarginContainer/tool_bar"]
 unique_name_in_owner = true
-
 layout_mode = 2
 theme_override_constants/icon_max_width = 19
 toggle_mode = true
 text = "Pause"
 icon = ExtResource("26_2wyq8")
 
-[node name="Button2" type="Button" parent="factory_95/bottom_bar/MarginContainer/tool_bar"]
+[node name="powerpoint_button2" type="Button" parent="factory_95/bottom_bar/MarginContainer/tool_bar"]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
