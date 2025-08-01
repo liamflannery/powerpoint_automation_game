@@ -6,10 +6,12 @@ var arrow_placement_mode := false :
 	set(value):
 		arrow_placement_mode = value
 		if !arrow_placement_mode: %ArrowButton.release_focus()
+
 var movement_mode := false :
 	set(value):
 		movement_mode = value
 		if !movement_mode: %cursor_button.release_focus()
+
 var produced_resources : int = 0 :
 	set(value):
 		produced_resources = value
@@ -43,8 +45,10 @@ var funny_subject_lines = [
 	"struggle to make slides with this ONE WEIRD TRICK",
 	"hot slides in your area",
 	"CONGRATULATIONS you've won another slide challenge",
-	
+	"RE: let's circle back to this",
+	"task for the unpaid intern",
 ]
+
 func create_email(this_level : int):
 	var subject 
 	match this_level:
@@ -64,8 +68,6 @@ func create_email(this_level : int):
 				subject = "Ive run out of subject line ideas"
 	var email = Email.new(subject, "Liam Flannery", this_level, %time.get_time())
 	%email_inbox.recieve_email(email)
-	
-	
 
 func get_adjacent_tiles(to_tile : Tile) -> Array[Tile]:
 	var tiles : Array[Tile]
@@ -114,7 +116,6 @@ func get_tiles() -> Array[Tile]:
 				tiles.append(child)
 	return tiles
 
-
 func is_window_focused(node : Control) -> bool:
 	var window_of_node
 	var current_node = node
@@ -148,31 +149,31 @@ var counter = 0
 
 var highlighted_tiles : Array
 var direction : Element.DIRECTION 
-
-
-
 var moving_element : Element
 var cooldown = 0.0
+
+func tick_elements() -> void:
+	"""Loop through all pages and tiles and tick elements"""
+
+  for page in %PageParent.get_children():
+  var tiles = page.get_children()
+  for tile in tiles:
+    for element : Element in tile.elements:
+      if element.is_mouse_over_element() and movement_mode and !element.locked:
+        if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
+          if !moving_element:
+            element.placement_mode = true
+            moving_element = element
+            continue
+      if element == moving_element:
+        continue
+      element.tick_element()
+
 func _process(delta: float) -> void:
 	cooldown += delta
-	for page in %PageParent.get_children():
-		var tiles = page.get_children()
-		for tile in tiles:
-			for element : Element in tile.elements:
-				if element.is_mouse_over_element() and movement_mode and !element.locked:
-					if Input.is_action_just_pressed("mouse_left") and cooldown > 0.1:
-						if !moving_element:
-							element.placement_mode = true
-							moving_element = element
-							continue
-				if element == moving_element:
-					continue
-				element.tick_element()
-				
-	
+	if not %pause_button.button_pressed:
+		tick_elements()
 
-		
-	
 	if !arrow_placement_mode:
 		return
 	if Input.is_action_just_pressed("mouse_left"):
@@ -264,15 +265,18 @@ var target : GameResource :
 
 var is_dragging : bool = false
 var drag_start_tile : Tile
+
 func drag_started():
 	is_dragging = true
 	drag_start_tile = get_closest_tile_to_position(get_global_mouse_position(), true)
+
 func drag_cancelled():
 	is_dragging = false
 	for tile in get_tiles():
 		tile.reset_tile()
 	highlighted_tiles.clear()
 	#arrow_placement_mode = false
+
 func drag_ended():
 	is_dragging = false
 	for tile in get_tiles():
@@ -305,16 +309,11 @@ func drag_ended():
 		for element in tile.elements:
 			element.set_direction()
 	
-
-	
 var level = 1 : 
 	set(value):
 		level = value
 		%level_text.text = "Level " + str(level) + ", produce the following:"
 var target_resources = 20
-
-
-
 
 class Email:
 	var subject_line : String

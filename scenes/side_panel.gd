@@ -5,8 +5,8 @@ func _ready() -> void:
 	for preview in %PreviewsParent.get_children():
 		var button : Button = preview.get_child(0)
 		button.pressed.connect(show_child.bind(preview.get_index()))
-
-
+	add_to_group('sender_group')  # Enables access by other scenes
+	
 func hide_all_pages():
 	for child in %PageParent.get_children():
 		child.hide()
@@ -14,6 +14,7 @@ func hide_all_pages():
 		preview.texture = load("res://assets/slide_icon_side.png")
 	
 func show_child(index = 0):
+	# Swaps slides
 	if %PageParent.get_child_count() - 1 < index:
 		return
 	hide_all_pages()

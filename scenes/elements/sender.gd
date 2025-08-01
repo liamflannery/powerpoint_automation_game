@@ -6,12 +6,13 @@ enum MODE{PREVIOUS, NEXT}
 var parent_page : Page
 @export var tile_text : Label
 
+## var slide_change_button = Button.new()
+
 
 func set_parent_page(this_page : Page):
 	if to_page == MODE.PREVIOUS:
 		texture_rect.texture = load("res://assets/previous_slide.png")
 		parent_page = this_page
-
 	else:
 		texture_rect.texture = load("res://assets/next_slide.png")
 		parent_page = this_page
@@ -28,7 +29,6 @@ func send_resource(sent_resource : GameResource, sending_element : Element):
 	else:
 		await super(sent_resource, sending_element)
 
-
 func can_recieve_resource(sending_element : Element, sending_resource : GameResource=null) -> bool:
 	return queued_resources.size() < max_queued_resources and processed_resources.size() < max_processed_resources
 
@@ -42,11 +42,11 @@ func get_send_to() -> Array[Tile]:
 			normal_send_to.append_array([parent_page.get_next_page().previous_page_reciever.parent_tile])
 	return normal_send_to
 
-
 func get_save_dict() -> Dictionary:
 	var save_dict = super()
 	save_dict["to_page"] = to_page
 	return save_dict
+
 func load_from_save_dict(dict : Dictionary):
 	if dict.has("to_page"):
 		to_page = int(dict["to_page"])
