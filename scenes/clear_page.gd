@@ -19,7 +19,7 @@ func _pressed() -> void:
 	# Clear all tiles on current page
 	if visible_page_found:
 		for tile : Tile in visible_page.get_children():
-			if tile.elements.front() is not Producer and tile.elements.front() is not Sender:
+			if !tile.elements.is_empty() and !tile.elements.front().locked:
 				tile.clear_element()
 	else:
 		print('Error - no visible page')

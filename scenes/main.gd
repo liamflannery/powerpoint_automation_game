@@ -297,8 +297,10 @@ func drag_ended():
 		else:
 			var existing_arrow = tile.elements[0]
 			if existing_arrow.sending_directions.size() == 1 and existing_arrow.recieving_directions.size() == 1 and i > 0 and i != highlighted_tiles.size() - 1:
-				if (existing_arrow.sending_directions[0] + existing_arrow.recieving_directions[0]) % 2 == 0 and direction not in [existing_arrow.sending_directions[0]]:
+				if (existing_arrow.sending_directions[0] + existing_arrow.recieving_directions[0]) % 2 == 0 and direction not in [existing_arrow.sending_directions[0]] + existing_arrow.recieving_directions:
 					tile.set_element(load("res://scenes/elements/arrow.tscn"))
+				else:
+					continue
 					
 		setting_arrow = tile.elements.back()
 		var recieving : Array[Element.DIRECTION] = setting_arrow.recieving_directions
