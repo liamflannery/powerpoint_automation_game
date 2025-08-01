@@ -115,11 +115,11 @@ func set_direction(in_sending_directions : Array[DIRECTION]= sending_directions,
 		in_recieving_directions = recieving_directions
 	recieving_directions = in_recieving_directions
 	sending_directions = in_sending_directions
-	if !adjacent_tiles.is_empty():
-		for dir in sending_directions.duplicate():
-			if !adjacent_tiles[dir]: sending_directions.erase(dir)
-		for dir in recieving_directions.duplicate():
-			if !adjacent_tiles[dir]: recieving_directions.erase(dir)
+	#if !adjacent_tiles.is_empty():
+		#for dir in sending_directions.duplicate():
+			#if !adjacent_tiles[dir]: sending_directions.erase(dir)
+		#for dir in recieving_directions.duplicate():
+			#if !adjacent_tiles[dir]: recieving_directions.erase(dir)
 	set_connectors()
 	if in_sending_directions.is_empty() or !texture_rect:
 		return
@@ -137,6 +137,8 @@ func set_connectors():
 	%in_left.hide()
 	%in_right.hide()
 	for dir in sending_directions:
+		if !adjacent_tiles.is_empty() and !adjacent_tiles[dir]:
+			continue
 		match dir:
 			DIRECTION.NORTH:
 				%out_top.show()
@@ -147,6 +149,8 @@ func set_connectors():
 			DIRECTION.WEST:
 				%out_left.show()
 	for dir in recieving_directions:
+		if !adjacent_tiles.is_empty() and !adjacent_tiles[dir]:
+			continue
 		match dir:
 			DIRECTION.NORTH:
 				%in_top.show()
