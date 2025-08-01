@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dfgu7xvmqp50u"]
+[gd_scene load_steps=61 format=3 uid="uid://dfgu7xvmqp50u"]
 
 [ext_resource type="PackedScene" uid="uid://c3kckcbhpanqj" path="res://scenes/tile.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b5mosc47svssq" path="res://scenes/main.gd" id="1_jyhfs"]
@@ -35,9 +35,14 @@
 [ext_resource type="PackedScene" uid="uid://bo3xftlp833rm" path="res://scenes/elements/element.tscn" id="27_kmb1v"]
 [ext_resource type="Script" uid="uid://y0ibw3q8paw4" path="res://scenes/time.gd" id="28_2f3dj"]
 [ext_resource type="PackedScene" uid="uid://cm3oaikfh4d10" path="res://scenes/game resources/blue_colour.tscn" id="29_pibwh"]
+[ext_resource type="PackedScene" uid="uid://hkqel2o3rxsu" path="res://scenes/game resources/pink_colour.tscn" id="33_2cjbq"]
+[ext_resource type="PackedScene" uid="uid://diu2gn0a5do18" path="res://scenes/game resources/quote_resource.tscn" id="34_chjal"]
 [ext_resource type="Script" uid="uid://b5c76xe02gpm3" path="res://scenes/pinny_handler.gd" id="34_dgi5k"]
+[ext_resource type="PackedScene" uid="uid://s3xjksqcly6e" path="res://scenes/game resources/graph_resource.tscn" id="35_cjqg0"]
 [ext_resource type="PackedScene" uid="uid://c4qnsscg53nn" path="res://scenes/pinny.tscn" id="35_j8jky"]
+[ext_resource type="PackedScene" uid="uid://bmoorrabwl0vt" path="res://scenes/game resources/star_wipe.tscn" id="36_vchkt"]
 [ext_resource type="Texture2D" uid="uid://cmf8v5ssyvfib" path="res://assets/mail_app_icon_no_notification.png" id="37_cjqg0"]
+[ext_resource type="PackedScene" uid="uid://bphndy3cbf4xj" path="res://scenes/game resources/fade.tscn" id="37_txyw0"]
 [ext_resource type="Shader" uid="uid://cujdfmn6hxyt0" path="res://shaders/color_dither_post_2d.gdshader" id="38_pibwh"]
 [ext_resource type="Texture2D" uid="uid://dm5q6tbre7nwm" path="res://assets/email_closed.png" id="42_2cjbq"]
 [ext_resource type="Script" uid="uid://cwx2chilr1gw6" path="res://scenes/email.gd" id="42_vchkt"]
@@ -891,6 +896,10 @@ layout_mode = 2
 [node name="C08" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_3" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="element" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_3/C08" instance=ExtResource("27_kmb1v")]
+layout_mode = 1
+producing_resource = ExtResource("33_2cjbq")
+
 [node name="C09" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_3" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -1022,6 +1031,10 @@ layout_mode = 2
 [node name="B09" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="element" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4/B09" instance=ExtResource("27_kmb1v")]
+layout_mode = 1
+producing_resource = ExtResource("34_chjal")
+
 [node name="B10" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -1096,6 +1109,10 @@ layout_mode = 2
 
 [node name="E04" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
+[node name="element" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4/E04" instance=ExtResource("27_kmb1v")]
+layout_mode = 1
+producing_resource = ExtResource("35_cjqg0")
 
 [node name="E05" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_4" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
@@ -1174,6 +1191,10 @@ layout_mode = 2
 [node name="B07" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
+[node name="element" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5/B07" instance=ExtResource("27_kmb1v")]
+layout_mode = 1
+producing_resource = ExtResource("36_vchkt")
+
 [node name="B08" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
 
@@ -1224,6 +1245,10 @@ layout_mode = 2
 
 [node name="D04" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2
+
+[node name="element" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5/D04" instance=ExtResource("27_kmb1v")]
+layout_mode = 1
+producing_resource = ExtResource("37_txyw0")
 
 [node name="D05" parent="factory_95/MainAreaContainer/PageArea/PageParent/page_5" instance=ExtResource("1_ig7tw")]
 layout_mode = 2

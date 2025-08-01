@@ -35,7 +35,7 @@ func _ready() -> void:
 			for element in tile.elements:
 				element.locked = true
 	await get_tree().create_timer(2).timeout
-	create_email(5)
+	create_email(3)
 
 var current_contract : Email
 var funny_subject_lines = [
@@ -254,10 +254,16 @@ func _process(delta: float) -> void:
 				tile.reset_tile()
 
 
+var sub_view
 var target : GameResource :
 	set(value):
+		if %target_parent.get_children().has(sub_view):
+			%target_parent.remove_child(sub_view)
+			%target_text.text = "no target"
 		target = value
-		var sub_view = target.duplicate()
+		if !target:
+			return
+		sub_view = target.duplicate()
 		%target_parent.add_child(sub_view)
 		%target_parent.move_child(sub_view, 0)
 		await get_tree().process_frame

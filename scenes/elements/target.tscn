@@ -33,6 +33,15 @@ east_port = 2
 south_port = 1
 west_port = 2
 
+[node name="go_to_email" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"InvisibleButton"
+
 [node name="out_top" type="TextureRect" parent="."]
 unique_name_in_owner = true
 z_index = 1
@@ -152,3 +161,5 @@ grow_horizontal = 2
 texture = ExtResource("10_4g5d1")
 expand_mode = 1
 stretch_mode = 5
+
+[connection signal="pressed" from="go_to_email" to="." method="_on_go_to_email_pressed"]

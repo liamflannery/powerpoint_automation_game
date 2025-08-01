@@ -18,3 +18,7 @@ func activate_element():
 			queued_resources.erase(resource)
 			all_resources.erase(resource)
 	element_activating = false
+
+
+func _on_go_to_email_pressed() -> void:
+	%email_inbox._on_target_button_pressed()

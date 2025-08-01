@@ -26,8 +26,10 @@ func test_notification_icon():
 
 
 func _on_target_button_pressed() -> void:
-	print("pressed")
-	target_email.show()
+	if target_email:
+		target_email.show()
+	else:
+		show()
 
 var target_email : OpenEmail
 func set_target_email(email : OpenEmail):
